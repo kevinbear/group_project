@@ -1,4 +1,26 @@
 # ISDS Final Poject
+## How to run this project
+
+1. Download or clone this project
+2. Open terminal and move position to `group_project` and go to `final_project`
+3. Run the server `python manage.py runserver`
+4. Copy the link `http://127.0.0.1:8000/restaurant/home`
+
+## Develop Web App (Topic 7)
+
+For our final group project, we are developing a restaurant web
+application using Python and the Django web framework. Our goal is to
+create a dynamic and interactive website that goes beyond a simple
+online menu. The web app will feature multiple tabs, including a
+homepage, separate sections for breakfast, lunch, and dinner menus,
+and an online ordering page.
+
+## Group Member
++ Kevin Kuo, Creator
++ Erin Vallejo, Orator
++ Hannah Nguyen, Interpreter
++ Mohammand Siddique Khan, Deliverer
++ Akash Yarehalli Satis, Orator
 
 ## Python Environment Setup
 
@@ -26,25 +48,9 @@
    - Generate requirements.txt (for pip user) `pip freeze > requirements.txt`
    - Then, when someone else sets up the project, they just run: `pip install -r requirment.txt`
 
-## How to run this project
-
-1. Download or clone this project
-2. Open terminal and move position to `group_project` and go to `final_project`
-3. Run the server `python manage.py runserver`
-4. Copy the link `http://127.0.0.1:8000/restaurant/home`
-
 ## UI Design
 
 [Figma Workspace](https://www.figma.com/design/576Wocaf7E4dsJbYljJaso/Restaurant-Web-App?node-id=0-1&t=nmuGb90mpe9oR6oa-1)
-
-## Topic 7 Develop Web App
-
-For our final group project, we are developing a restaurant web
-application using Python and the Django web framework. Our goal is to
-create a dynamic and interactive website that goes beyond a simple
-online menu. The web app will feature multiple tabs, including a
-homepage, separate sections for breakfast, lunch, and dinner menus,
-and an online ordering page.
 
 ## Progress
 
