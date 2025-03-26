@@ -26,6 +26,12 @@
    - Generate requirements.txt (for pip user) `pip freeze > requirements.txt`
    - Then, when someone else sets up the project, they just run: `pip install -r requirment.txt`
 
+## How to run this project
+1. Download or clone this project
+2. Open terminal and go to the fina_project folder
+3. Go to restaruant folder 
+4. Activate the envrionment
+5. Run the server `python manage.py runserver`
 ## UI Design
 
 [Figma Workspace](https://www.figma.com/design/576Wocaf7E4dsJbYljJaso/Restaurant-Web-App?node-id=0-1&t=nmuGb90mpe9oR6oa-1)
