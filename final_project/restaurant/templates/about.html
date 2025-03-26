@@ -1,0 +1,26 @@
+{%extends "base.html"%}
+{%block placeholder%} 
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <section>
+                <h1>About</h1>
+                <h4>ISDS 558 2025 Spring Group 7 Final Project</h4>
+                <p>For our final group project, we are developing a restaurant web application using Python and the Django web framework. Our goal is to create a dynamic and interactive website that goes beyond a simple online menu. The web app will feature multiple tabs, including a homepage, separate sections for breakfast, lunch, and dinner menus, and an online ordering page.</p>
+                <p>To design the user interface, we will use HTML and CSS instead of Tkinter, ensuring a modern and visually appealing experience. By leveraging Django’s powerful backend capabilities, we aim to provide a seamless user experience while efficiently managing restaurant data.</p>
+            </section>
+        </div>
+        <div class="col-md" style="height: 100%;">
+            <section style="height: 100%;">
+            <img src="{% static 'about_right.jpg' %}" alt="About Image" class="img-fluid rounded mx-auto d-block" style="max-width: 50%;">
+            </section>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="group-member text-center">
+            <img class="group-member" src="{% static 'ellipse-90.svg' %}" style="width: 75vw; height: auto;" />
+        </div>
+    </div>
+</div>
+{%endblock%}
