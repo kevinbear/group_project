@@ -1,2 +1,36 @@
 {%extends "base.html"%}
-{%block placeholder%} Login and Signup Page {%endblock%}
+{% load static %}
+{%block stylesheet%}
+<link href="{% static 'css/signup.css'%}" rel="stylesheet" />
+{%endblock%}
+{%block placeholder%} 
+<div class="container signup">
+    <div class="col-md">
+        <div class="row">
+            <h1>Create new account</h1>
+        </div>
+        <div class="row">
+            <h6>Already A Member?</h6>
+            <a href="{%url 'login_signup'%}">Login</a>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" name="firstName" placeholder="First Name" required="required">
+            </div>
+            <div class="col">
+                <input type="text" name="LastName" placeholder="Last Name" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <input type="email" name="email" placeholder="Email" required="required">
+        </div>
+        <div class="row">
+            <input type="password" name="password" placeholder="Password" required="required">
+        </div>
+        <div class="row">
+            <input type="button" name="change method" class="btn btn-secondary">
+            <input type="button" name="change method" class="btn btn-primary">
+        </div>
+    </div>
+</div>
+{%endblock%}
