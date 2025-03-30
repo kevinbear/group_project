@@ -1,0 +1,159 @@
+{%extends "base.html"%}
+{% load static %}
+{%block stylesheet%}
+<link href="{% static 'css/signup.css'%}" rel="stylesheet" />
+{%endblock%}
+{%block placeholder%} 
+<div class="container-fluid signup">
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col d-flex flex-column justify-content-center vh-100">
+            <div class="row text-white text-center">
+                <h1>Create new account</h1>
+            </div>
+            <div class="row">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="container">
+                        <!-- Login link -->
+                        <span class="row ps-2">
+                            <div class="d-flex py-3">
+                                <h6 class="text-white fw-bold pe-3">Already A Member?</h6>
+                                <a class="text-decoration-none fs-6 px-6 lh-1" href="{% url 'login' %}">Login</a>
+                            </div>
+                        </span>
+
+                        <!-- Name Fields -->
+                        <div class="row">
+                            <div class="col-md-6 my-4">
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" required>
+                                        <label for="firstName">First Name</label>
+                                    </div>
+                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 my-4">
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" required>
+                                        <label for="lastName">Last Name</label>
+                                    </div>
+                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="row my-4">
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <input type="text" id="email" name="email" class="form-control" placeholder=" " required>
+                                    <label for="email">Email</label>
+                                </div>
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="row mt-5 mb-4">
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
+                                    <label for="password">Password</label>
+                                </div>
+                                <span class="input-group-text">
+                                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Buttons -->
+                        <div class="row mt-5 mb-4">
+                            <div class="d-flex justify-content-between">
+                                <input type="button" class="btn btn-secondary rounded-pill" value="Change Value">
+                                <input type="button" class="btn btn-primary rounded-pill" value="Create an account">
+                            </div>
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column (Restaurant Image) -->
+        <div class="col restaurant-image"></div>
+    </div>
+</div>
+
+<!-- Password Toggle Script -->
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        var passwordField = document.getElementById("password");
+        var icon = this;
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    });
+</script>
+
+<!-- Add Dark Theme Styles -->
+<style>
+/* Dark Mode Styling for Input */
+.form-control {
+    background-color: #222 !important; /* Dark background */
+    color: #fff !important; /* White text */
+    border: 1px solid #555 !important; /* Subtle border */
+}
+
+/* Remove default white background on focus */
+.form-control:focus {
+    background-color: #222 !important;
+    color: #fff !important;
+    border-color: #bbb !important;
+    box-shadow: none !important;
+}
+
+/* Floating label default styling */
+.form-floating label {
+    color: #aaa !important; /* Light gray label */
+    background: transparent !important; /* Remove white box */
+    padding: 0 0.5rem; /* Add padding to keep label text clear */
+    transition: all 0.2s ease-in-out;
+}
+
+/* When the input is focused or has text, move label up */
+.form-floating .form-control:focus ~ label,
+.form-floating .form-control:not(:placeholder-shown) ~ label {
+    color: #fff !important; /* Make label white */
+    font-weight: bold;
+    transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem); /* Position label properly */
+    background-color: transparent !important; /* Ensure no white box */
+    padding: 0 5px;
+}
+
+/* Hide the placeholder to prevent overlap */
+.form-floating .form-control::placeholder {
+    color: transparent !important;
+}
+
+/* Fix Bootstrap's default background issue */
+.form-floating > label::after {
+    background-color: transparent !important; /* Remove Bootstrap's white box */
+}
+
+/* Dark Theme for Input Group Text (Icons) */
+.input-group-text {
+    background-color: #222 !important;
+    color: #fff !important;
+    border-color: #555 !important;
+}
+</style>
+{%endblock%}
