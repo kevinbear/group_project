@@ -185,3 +185,6 @@ Template is reusable HTML file and it allows us to display dynamic data.
     ```
 4. Add the `{% load static %}` to HTML file which use the static files
 5. The syntax of the static file `{% static 'css/yourStyleSheet.css' %}` or `{% static 'image/yourImage.jpg'%}`. The path is following your static directory. If you put everything to static folder and without categorizing them you can just put the files name. Eg. `{% static 'image/yourImage.jpg'%}`
+
+### Database Setup
+1. 

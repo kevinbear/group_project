@@ -58,4 +58,3 @@ and an online ordering page.
 - [x] Adopt Boostrap 5 UI Framework
 - [x] Setup development enironment
 - [x] Base HTML template
-- [x] Finish About HTML
