@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!1*yp@e$*%8r=r4(hcdr5^4hiz5%#d5^jcgt0go_!q7-=s(e_1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 PORT = os.getenv("PORT", "8000")
 ALLOWED_HOSTS = [
     '*'
@@ -124,6 +124,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "restaurant" / "static",
 ]
+STATIC_ROOT = BASE_DIR / "restaurant" / "staticfiles"  # Add this line for production
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
