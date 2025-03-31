@@ -57,13 +57,13 @@ Once the environment is set up, navigate to the project folder and start the ser
 #### Windows
 ```powershell
 cd final_project
-python manage.py runserver
+python manage.py runserver --insecure
 ```
 
 #### macOS/Linux
 ```bash
 cd final_project
-python manage.py runserver
+python manage.py runserver --insecure
 ```
 
 The server should now be running, and you can access your application in a web browser at:
