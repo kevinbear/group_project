@@ -43,7 +43,7 @@ Activate the virtual environment for python 3.12 and install all dependencies in
 #### Windows
 ```powershell
 .\windows_dev_env\Scripts\Activate.ps1
-python install -r requirements.txt
+pip install -r requirements.txt
 ```
 #### macOS/Linux
 ```bash
