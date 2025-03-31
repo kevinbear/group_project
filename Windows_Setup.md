@@ -172,7 +172,7 @@ If you encounter errors during installation, ensure that `requirements.txt` is p
 Ensure you are in the correct project folder where `manage.py` is located:
 
 ```powershell
-cd <your_project>\group_project\final_project
+cd <your_project_path>\group_project\final_project
 ```
 
 ### Apply Migrations:
@@ -181,12 +181,6 @@ Run the following command to apply any pending migrations:
 
 ```powershell
 python manage.py migrate
-```
-
-### Create a Superuser (Optional, for Admin Access):
-
-```powershell
-python manage.py createsuperuser
 ```
 
 Follow the prompts to set up a username, email, and password.
@@ -199,25 +193,21 @@ Start the Django development server:
 python manage.py runserver
 ```
 
-If you want to specify a different port (e.g., 8080), use:
-
-```powershell
-python manage.py runserver 8080
-```
-
 ### Access the Project:
 
 Once the server is running, open your browser and navigate to:
 
 ```
-http://127.0.0.1:8000/
+http://127.0.0.1:8000/restaurant/home
 ```
 
-If you created a superuser, you can log into the Django admin panel at:
-
+If you want to login admin panel, you can log into:
 ```
-http://127.0.0.1:8000/admin/
+http://127.0.0.1:8000/admin
 ```
+### Admin Panel Login:
+Email: your school email  
+Password: project7
 ### Stop the server
 Press `ctrl + c` in the terminal can stop the server
 
