@@ -38,6 +38,19 @@
 
 This will set up the virtual environment and install required dependencies from `requirements.txt`.
 
+### Step 4: Activate virtual environment
+Activate the virtual environment for python 3.12 and install all dependencies in `requirements.txt`
+#### Windows
+```powershell
+.\windows_dev_env\Scripts\Activate.ps1
+python install -r requirements.txt
+```
+#### macOS/Linux
+```bash
+source macos_dev_env/bin/activate
+python install -r requirements.txt
+```
+
 ### Step 5: Start the Django Server
 Once the environment is set up, navigate to the project folder and start the server.
 
