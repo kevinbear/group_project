@@ -43,13 +43,13 @@ Once the environment is set up, navigate to the project folder and start the ser
 
 #### Windows
 ```powershell
-cd final_project/restaurant
+cd final_project
 python manage.py runserver
 ```
 
 #### macOS/Linux
 ```bash
-cd final_project/restaurant
+cd final_project
 python manage.py runserver
 ```
 
@@ -68,7 +68,29 @@ http://127.0.0.1:8000/restaurant/home
   ```bash
   python manage.py migrate
   ```
+- Encoding Error in PowerShell:
+- If you run `.\setup_env.ps1` and encounter the following issue, you need to change the `.\setup_env.ps1` encoding to `utf8bom`
+   ```powershell
+   At C:\Users\<yourname>\group_project\setup_env.ps1:55 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+   At C:\Users\<yourname>\group_project\setup_env.ps1:77 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+   At C:\Users\<yourname>\group_project\setup_env.ps1:127 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+   At C:\Users\<yourname>\group_project\setup_env.ps1:146 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+      + CategoryInfo          : ParserError: (:) [], ParseException
+      + FullyQualifiedErrorId : UnexpectedToken
 
+   ```
 ---
 
 ## Develop Web App (Topic 7)
