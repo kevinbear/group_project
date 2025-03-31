@@ -59,7 +59,7 @@ http://127.0.0.1:8000/restaurant/home
 ```
 
 ### Troubleshooting
-- Ensure you have the necessary permissions to execute scripts.
+#### 1. Ensure you have the necessary permissions to execute scripts.
 - If dependencies fail to install, try manually running:
   ```bash
   pip install -r requirements.txt
@@ -68,8 +68,8 @@ http://127.0.0.1:8000/restaurant/home
   ```bash
   python manage.py migrate
   ```
-- Encoding Error in PowerShell:
-- If you run `.\setup_env.ps1` and encounter the following issue, you need to change the `.\setup_env.ps1` encoding to `utf8bom`
+#### 2. `Step 3` possible errors:
+   + Encoding Error in PowerShell. If you run `.\setup_env.ps1` and encounter the following issue, you need to change the `.\setup_env.ps1` encoding to `utf8bom`
    ```powershell
    At C:\Users\<yourname>\group_project\setup_env.ps1:55 char:1
    + }
@@ -91,6 +91,8 @@ http://127.0.0.1:8000/restaurant/home
       + FullyQualifiedErrorId : UnexpectedToken
 
    ```
+
+   + If you see this error`pyenv-win installation failed. Please install manually from https://github.com/pyenv-win/pyenv-win`, just close your VS code and reopen it.
 ---
 
 ## Develop Web App (Topic 7)
