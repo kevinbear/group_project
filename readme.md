@@ -1,4 +1,4 @@
-# ISDS Final Poject
+# ISDS Final Poject (For Render)
 ## Python Environment Setup
 
 ### Prerequisites
@@ -38,18 +38,31 @@
 
 This will set up the virtual environment and install required dependencies from `requirements.txt`.
 
+### Step 4: Activate virtual environment
+Activate the virtual environment for python 3.12 and install all dependencies in `requirements.txt`
+#### Windows
+```powershell
+.\windows_dev_env\Scripts\Activate.ps1
+python install -r requirements.txt
+```
+#### macOS/Linux
+```bash
+source macos_dev_env/bin/activate
+python install -r requirements.txt
+```
+
 ### Step 5: Start the Django Server
 Once the environment is set up, navigate to the project folder and start the server.
 
 #### Windows
 ```powershell
-cd final_project/restaurant
+cd final_project
 python manage.py runserver
 ```
 
 #### macOS/Linux
 ```bash
-cd final_project/restaurant
+cd final_project
 python manage.py runserver
 ```
 
@@ -59,7 +72,7 @@ http://127.0.0.1:8000/restaurant/home
 ```
 
 ### Troubleshooting
-- Ensure you have the necessary permissions to execute scripts.
+#### 1. Ensure you have the necessary permissions to execute scripts.
 - If dependencies fail to install, try manually running:
   ```bash
   pip install -r requirements.txt
@@ -68,7 +81,31 @@ http://127.0.0.1:8000/restaurant/home
   ```bash
   python manage.py migrate
   ```
+#### 2. `Step 3` possible errors:
+   + Encoding Error in PowerShell. If you run `.\setup_env.ps1` and encounter the following issue, you need to change the `.\setup_env.ps1` encoding to `utf8bom`
+   ```powershell
+   At C:\Users\<yourname>\group_project\setup_env.ps1:55 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+   At C:\Users\<yourname>\group_project\setup_env.ps1:77 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+   At C:\Users\<yourname>\group_project\setup_env.ps1:127 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+   At C:\Users\<yourname>\group_project\setup_env.ps1:146 char:1
+   + }
+   + ~
+   Unexpected token '}' in expression or statement.
+      + CategoryInfo          : ParserError: (:) [], ParseException
+      + FullyQualifiedErrorId : UnexpectedToken
 
+   ```
+
+   + If you see this error`pyenv-win installation failed. Please install manually from https://github.com/pyenv-win/pyenv-win`, just close your VS code and reopen it.
 ---
 
 ## Develop Web App (Topic 7)

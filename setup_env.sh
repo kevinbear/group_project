@@ -40,6 +40,16 @@ else
     source ~/.zshrc
 fi
 
+# Install Python 3.12 using pyenv
+if pyenv install --list | grep -q " 3.12."; then
+    echo -e "\033[1;36mInstalling Python 3.12 using pyenv...\033[0m"
+    pyenv install 3.12.0
+    pyenv global 3.12.0
+    echo -e "\033[1;32m✔ Python 3.12 installed and set globally!\033[0m"
+else
+    echo -e "\033[1;31m❌ Python 3.12 not available in pyenv. Please check your pyenv installation.\033[0m"
+fi
+
 # Create Virtual Environment
 echo -e "\033[1;36mCreating virtual environment (macos_dev_env)...\033[0m"
 python3 -m venv macos_dev_env
