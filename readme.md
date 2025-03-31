@@ -48,7 +48,7 @@ python install -r requirements.txt
 #### macOS/Linux
 ```bash
 source macos_dev_env/bin/activate
-python install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Step 5: Start the Django Server
