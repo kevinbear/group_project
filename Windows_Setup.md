@@ -64,6 +64,32 @@ If the command doesn’t work, follow these steps to add Python and pip to the s
    ```
 
 ## 6. Install `pyenv-win`
+Run the following command:
+
+```powershell
+Get-ExecutionPolicy
+```
+
+If it returns `Restricted`, it means scripts are not allowed to run.
+
+### Temporarily Allow Scripts (Recommended)
+
+To allow running scripts just for this session, run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+This allows scripts to run only for the current session.
+
+### Permanently Allow Scripts (If Needed)
+
+If you want to change the execution policy permanently, run:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
 
 ### Install `pyenv-win` in PowerShell:
 
@@ -71,7 +97,7 @@ If the command doesn’t work, follow these steps to add Python and pip to the s
 Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
 ```
 
-- Restart PowerShell (or close and reopen VS Code terminal).
+- Restart PowerShell (or close and reopen VS Code).
 - Check if `pyenv-win` is installed:
   ```powershell
   pyenv --version
@@ -146,7 +172,7 @@ If you encounter errors during installation, ensure that `requirements.txt` is p
 Ensure you are in the correct project folder where `manage.py` is located:
 
 ```powershell
-cd D:\Project\group_project\final_project
+cd <your_project>\group_project\final_project
 ```
 
 ### Apply Migrations:
@@ -194,6 +220,7 @@ http://127.0.0.1:8000/admin/
 ```
 ### Stop the server
 Press `ctrl + c` in the terminal can stop the server
+
 ## 11. Deactivate the Virtual Environment
 
 Once you're done, deactivate the virtual environment:
@@ -203,4 +230,5 @@ deactivate
 ```
 
 If you plan to work again, reactivate the virtual environment before running any Python commands.
+
 
