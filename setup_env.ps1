@@ -35,11 +35,15 @@ if (Get-Command pip -ErrorAction SilentlyContinue) {
 # Check pyenv-win Installation
 if (Get-Command pyenv -ErrorAction SilentlyContinue) {
     Write-Host "✔ pyenv-win is installed: $(pyenv --version)" -ForegroundColor Green
-} else {
+} else 
+{
     Write-Host "❌ pyenv-win is not installed. Installing now..."
     Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "install-pyenv-win.ps1"
     & ".\install-pyenv-win.ps1"
-    if (Get-Command pyenv -ErrorAction SilentlyContinue) {
+
+    # Verify pyenv-win installation
+    if (Get-Command pyenv -ErrorAction SilentlyContinue) 
+    {
         Write-Host "✔ pyenv-win installed successfully!" -ForegroundColor Green
     } else {
         Write-Host "❌ pyenv-win installation failed. Please install manually from https://github.com/pyenv-win/pyenv-win" -ForegroundColor Red
@@ -52,7 +56,7 @@ Write-Host "Creating virtual environment (windows_dev_env)..." -ForegroundColor 
 python -m venv windows_dev_env
 Write-Host "✔ Virtual environment created: windows_dev_env" -ForegroundColor Green
 
-# Activate Virtual Environment
+# Instructions to Activate Virtual Environment
 Write-Host "To activate the virtual environment, run:" -ForegroundColor Yellow
 Write-Host ".\windows_dev_env\Scripts\Activate.ps1" -ForegroundColor White
 
@@ -61,4 +65,5 @@ Write-Host "Installing dependencies from requirements.txt..." -ForegroundColor C
 pip install -r requirements.txt
 Write-Host "✔ All required packages installed!" -ForegroundColor Green
 
-Write-Host "✅ Windows environment setup completed!" -ForegroundColor Green
+# Final Success Message
+Write-Host "Windows environment setup completed successfully!" -ForegroundColor Green
