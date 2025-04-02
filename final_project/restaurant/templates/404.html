@@ -1,130 +1,141 @@
 {% extends "base.html" %}
 {% load static %}
 {% block placeholder %}
-<div class="container-fluid d-flex justify-content-center align-items-center melting-background" style="height: 100vh;">
-    <div class="text-center text-white p-5" style="background: rgba(6, 87, 163, 0.603); border-radius: 10px;">
-        <h1 class="fw-bold melting-text">This Page is Overcooked!</h1>
-        <p class="fw-bold fs-4 melting-text">Looks like we left this page in the oven too long. It's burnt!</p>
-        <a id="home-button" class="btn btn-primary text-white rounded-pill w-50" href="/restaurant/home">Return to Home Page</a>
+<main>
+    <div class="container-fluid d-flex justify-content-center align-items-center melting-background" style="background: rgba(34, 139, 238, 0.358);">
+        <div class="col-md">
+            <div class="d-flex flex-column text-center text-white p-5">
+                <h1 class="fw-bold melting-text">🍕 🍔 🌮 🍩 🍟 🍗 🍎</h1>
+                <h1 class="fw-bold melting-text">404 This Page is Overcooked!</h1>
+                <h1 class="fw-bold melting-text">🍕 🍔 🌮 🍩 🍟 🍗 🍎</h1>
+                <p class="fw-bold fs-4 melting-text">Looks like we left this page in the oven too long. It's burnt!</p>
+                <a id="home-button" class="btn btn-primary text-white rounded-pill w-50 mx-auto" href="{% url 'home'%}">Return to Home Page</a>
+            </div>
+        </div>
     </div>
-</div>
+    
+    <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        position: relative;
+        z-index: -10;
+        overflow: auto;
+    }
+    main{
+        flex: 1;
+        z-index: -1;
+        position: relative;
+        padding-bottom: 50px; /* Extra space for mobile users */
+    }
+    @keyframes melt {
+        0% { transform: translateY(0) scaleX(1); }
+        30% { transform: translateY(10px) scaleX(1.05); }
+        50% { transform: translateY(5px) scaleX(1.1); }
+        70% { transform: translateY(10px) scaleX(1.1); }
+        100% { transform: translateY(15px) scaleX(1.2); }
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        25% { transform: translateY(-10px); }
+        50% { transform: translateY(10px); }
+        75% { transform: translateY(-10px); }
+    }
+    
+    /* Stream effect */
+    @keyframes water-flow {
+        0% { left: -100%; opacity: 1; }
+        100% { left: 100%; opacity: 0; }
+    }
+    
+    /* Chessboard pattern for background */
+    @keyframes chessboard-melt {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+    }
+    
+    .melting-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 150px);
+        grid-template-rows: repeat(auto-fill, 150px);
+        gap: 20px;
+        z-index: -1;
+    }
+    
+    /* Dripping Effect */
+    @keyframes drip {
+        0% { background-size: 100px 100px; }
+        50% { background-size: 100px 110px; }
+        100% { background-size: 100px 100px; }
+    }
+    
+    /* Applying the melting text animation */
+    .melting-text {
+        font-family: "Impact", sans-serif;
+        font-size: 100px;
+        color: #ff4500;
+        position: relative;
+        display: inline-block;
+        animation: melt 3s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
+    }
+    
+    .melting-text::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: inherit;
+        opacity: 0.8;
+        animation: melt 3s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
+    }
+    
+    /* Button stream animation */
+    #home-button {
+        position: relative;
+        overflow: hidden;
+        animation: none;
+        z-index: 10; /* Higher than other content */
+    }
+    
+    footer {
+        position: relative;
+        z-index: 1; /* Ensure it stays above the background */
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .melting-text {
+            font-size: 50px; /* Reduce text size for mobile */
+        }
 
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" class="d-none">
-    <defs>
-        <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" result="blurred" stdDeviation="5" />
-            <feColorMatrix in="blurred" result="coloredBlur" type="matrix" values="0 0 0 0 0 
-                0 0 0 0 0 
-                0 0 0 0 0 
-                0 0 0 1 0" />
-            <feBlend in="SourceGraphic" in2="coloredBlur" mode="normal" />
-        </filter>
-    </defs>
-</svg>
+        .container-fluid {
+            padding: 20px;
+        }
 
-<style>
-@keyframes melt {
-    0% { transform: translateY(0) scaleX(1); }
-    30% { transform: translateY(10px) scaleX(1.05); }
-    50% { transform: translateY(5px) scaleX(1.1); }
-    70% { transform: translateY(10px) scaleX(1.1); }
-    100% { transform: translateY(15px) scaleX(1.2); opacity: 0.7; }
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-10px); }
-    50% { transform: translateY(10px); }
-    75% { transform: translateY(-10px); }
-}
-
-/* Stream effect */
-@keyframes water-flow {
-    0% { left: -100%; opacity: 1; }
-    100% { left: 100%; opacity: 0; }
-}
-
-/* Chessboard pattern for background */
-@keyframes chessboard-melt {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 100%; }
-}
-
-.melting-background {
-    position: fixed; /* Keep the background fixed to the viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        linear-gradient(45deg, #000 25%, transparent 25%) 0 0, 
-        linear-gradient(45deg, #000 25%, transparent 25%) 50px 50px;
-    background-size: 100px 100px;
-    animation: chessboard-melt 3s linear infinite, drip 1s ease-in-out infinite;
-    z-index: -1; /* Keep the background behind content */
-}
-
-/* Dripping Effect */
-@keyframes drip {
-    0% { background-size: 100px 100px; }
-    50% { background-size: 100px 110px; }
-    100% { background-size: 100px 100px; }
-}
-
-/* Applying the melting text animation */
-.melting-text {
-    font-family: "Impact", sans-serif;
-    font-size: 100px;
-    color: #ff4500;
-    position: relative;
-    display: inline-block;
-    animation: melt 3s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
-}
-
-.melting-text::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: inherit;
-    opacity: 0.8;
-    animation: melt 3s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
-}
-
-/* Button stream animation */
-#home-button {
-    position: relative;
-    overflow: hidden;
-    animation: none;
-}
-
-#home-button.clicked::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: #212e7991;
-    animation: water-flow 3s ease-in-out forwards;
-}
-
-footer {
-    position: relative;
-    z-index: 1; /* Ensure it stays above the background */
-}
-</style>
-
-<script>
-    document.getElementById("home-button").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent the default action for a moment
-        this.classList.add("clicked"); // Add the "clicked" class to trigger the animation
-
-        // Wait for the animation to finish before redirecting
-        setTimeout(function() {
-            window.location.href = "{% url 'home' %}"; // Redirect to the home page
-        }, 3000); // Time should match the animation duration (3s)
-    });
-</script>
-
+        main {
+            min-height: auto; /* Remove fixed height so scrolling works */
+            height: auto;
+        }
+    }
+    </style>
+    
+    <script>
+        document.getElementById("home-button").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the default action for a moment
+            this.classList.add("clicked"); // Add the "clicked" class to trigger the animation
+    
+            // Wait for the animation to finish before redirecting
+            setTimeout(function() {
+                window.location.href = "{% url 'home' %}"; // Redirect to the home page
+            }, 3000); // Time should match the animation duration (3s)
+        });
+    </script>
+</main>
 {% endblock %}

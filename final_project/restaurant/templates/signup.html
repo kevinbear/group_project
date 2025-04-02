@@ -72,7 +72,7 @@
                         <!-- Buttons -->
                         <div class="row mt-5 mb-4">
                             <div class="d-flex justify-content-between">
-                                <input type="button" class="btn btn-secondary rounded-pill" value="Change Value">
+                                <input type="button" class="btn btn-secondary rounded-pill" value="Change Login Method">
                                 <input type="button" class="btn btn-primary rounded-pill" value="Create an account">
                             </div>
                         </div>                        
@@ -154,6 +154,13 @@
     background-color: #222 !important;
     color: #fff !important;
     border-color: #555 !important;
+}
+
+/* On Small Screens (less than 768px) */
+@media (max-width: 768px) {
+    .restaurant-image {
+        display: none;
+    }
 }
 </style>
 {%endblock%}

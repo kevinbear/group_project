@@ -6,36 +6,153 @@
 {%block placeholder%} 
 <div class="container-fluid signup">
     <div class="row">
-        <div class="col">
-            <div class="row">
-                <h1>Create new account</h1>
+        <!-- Left Column (Restaurant Image) -->
+        <div class="left-column col position-relative">
+            <div class="restaurant-image d-flex justify-content-center align-items-center">
             </div>
-            <div class="row">
-                <h6>Already A Member?</h6>
-                <a href="{%url 'login'%}">Login</a>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <input type="text" name="firstName" placeholder="First Name" required="required">
-                </div>
-                <div class="col">
-                    <input type="text" name="LastName" placeholder="Last Name" required="required">
-                </div>
-            </div>
-            <div class="row">
-                <input type="email" name="email" placeholder="Email" required="required">
-            </div>
-            <div class="row">
-                <input type="password" name="password" placeholder="Password" required="required">
-            </div>
-            <div class="row">
-                <input type="button" name="change method" class="btn btn-secondary">
-                <input type="button" name="change method" class="btn btn-primary">
-            </div>
+            <span class="floating-text text-white text-center">
+                <h1>Hello,</h1>
+                <h1 class="fw-bold">Welcome!</h1>
+            </span>
         </div>
-        <div class="col restaurant-image">
-    
+        <!-- Right Column (login form)-->
+        <div class="col d-flex flex-column justify-content-center vh-100">
+            <div class="row text-white text-center">
+                <h1>Login</h1>
+            </div>
+            <div class="row">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="container">
+                        <!-- Email -->
+                        <div class="row my-4">
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <input type="text" id="email" name="email" class="form-control" placeholder=" " required>
+                                    <label for="email">Email</label>
+                                </div>
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="row mt-5 mb-4">
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
+                                    <label for="password">Password</label>
+                                </div>
+                                <span class="input-group-text">
+                                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Buttons -->
+                        <div class="row mt-5 mb-4">
+                            <div class="d-flex justify-content-between">
+                                <input type="button" class="btn btn-info rounded-pill w-25" value="Login">
+                                <input type="button" class="btn btn-outline-info rounded-pill w-25" value="Sign up">
+                            </div>
+                        </div>                        
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Password Toggle Script -->
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        var passwordField = document.getElementById("password");
+        var icon = this;
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    });
+</script>
+
+<!-- Add Dark Theme Styles -->
+<style>
+/* Dark Mode Styling for Input */
+.form-control {
+    background-color: #222 !important; /* Dark background */
+    color: #fff !important; /* White text */
+    border: 1px solid #555 !important; /* Subtle border */
+}
+
+/* Remove default white background on focus */
+.form-control:focus {
+    background-color: #222 !important;
+    color: #fff !important;
+    border-color: #bbb !important;
+    box-shadow: none !important;
+}
+
+/* Floating label default styling */
+.form-floating label {
+    color: #aaa !important; /* Light gray label */
+    background: transparent !important; /* Remove white box */
+    padding: 0 0.5rem; /* Add padding to keep label text clear */
+    transition: all 0.2s ease-in-out;
+}
+
+/* When the input is focused or has text, move label up */
+.form-floating .form-control:focus ~ label,
+.form-floating .form-control:not(:placeholder-shown) ~ label {
+    color: #fff !important; /* Make label white */
+    font-weight: bold;
+    transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem); /* Position label properly */
+    background-color: transparent !important; /* Ensure no white box */
+    padding: 0 5px;
+}
+
+/* Hide the placeholder to prevent overlap */
+.form-floating .form-control::placeholder {
+    color: transparent !important;
+}
+
+/* Fix Bootstrap's default background issue */
+.form-floating > label::after {
+    background-color: transparent !important; /* Remove Bootstrap's white box */
+}
+
+/* Dark Theme for Input Group Text (Icons) */
+.input-group-text {
+    background-color: #222 !important;
+    color: #fff !important;
+    border-color: #555 !important;
+}
+.restaurant-image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.floating-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+/* On Small Screens (less than 768px) */
+@media (max-width: 768px) {
+    .left-column{
+        display: none;
+    }
+    input[type="button"]{
+        width: 50% !important;
+    }
+}
+</style>
 {%endblock%}
