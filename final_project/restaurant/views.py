@@ -3,9 +3,7 @@ from django.contrib import messages
 from restaurant.forms import SignupForm
 from restaurant.models import CustomUser
 
-# Create your views here.
-def test(request):
-    return HttpResponse("Hello World")
+# Create your views here.ß
 
 def home(request):
     return render(request, 'home.html')
