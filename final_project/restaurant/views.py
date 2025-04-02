@@ -36,5 +36,8 @@ def signup(request):
 def shopping_cart(request):
     return render(request, 'shopping_cart.html')
 
+def checkout(request):
+    return render(request, 'checkout.html')
+
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
