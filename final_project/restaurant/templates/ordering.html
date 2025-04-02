@@ -1,2 +1,69 @@
 {%extends "base.html"%}
-{%block placeholder%} Ordering Page {%endblock%}
+{%block placeholder%} 
+{%load static%}
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-md d-flex flex-column justify-content-center align-items-center" id="order_left">
+            <h1 class="order_text">ORDER TYPE</h1>
+
+            <!-- FLEX CONTAINER TO ALIGN BUTTONS IN A ROW -->
+            <div class="d-flex w-100">
+                <input type="radio" class="btn-check" name="options-outlined" id="pickup-outlined" autocomplete="off" checked>
+                <label class="btn btn-outline-primary rounded-pill w-50 text-center me-3" for="pickup-outlined">PICKUP</label>
+
+                <input type="radio" class="btn-check choose-delivery" name="options-outlined" id="delivery-outlined" autocomplete="off">
+                <label class="btn btn-outline-primary rounded-pill w-50 text-center" for="delivery-outlined">DELIVERY</label>
+            </div>
+
+            <!-- DELIVERY ADDRESS INPUT -->
+            <div class="input-group mt-3" id="extra-input" style="display: none;">
+                <span class="input-group-text">Enter your address</span>
+                <input type="text" class="form-control" aria-label="Enter address">
+            </div>
+
+            <a href="{% url 'shopping_cart' %}" class="btn btn-success mt-3">Start Order</a>
+        </div>
+        <div class="col-md" id="order_right"></div>
+    </div>
+    <style>
+        #order_right{
+            background-image: url("{% static 'image/order_background.jpg'%}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+        #order_left{
+            background: rgb(252,176,69);
+        }
+        @media (max-width: 768px) {
+            #order_left{
+                background-image: url("{% static 'image/order_background.jpg'%}");
+                background-size: cover;
+                background-position: center;
+                height: 100vh;
+            }
+            #order_right{
+                display: none;
+            }
+            .order_text{
+                color: white;
+            }
+        }
+    </style>
+    <script>
+        // JavaScript to Show/Hide Extra Input
+        document.addEventListener("DOMContentLoaded", function () {
+            let deliveryOption = document.getElementById("delivery-outlined");
+            let pickupOption = document.getElementById("pickup-outlined");
+            let extraInput = document.getElementById("extra-input");
+
+            function toggleInput() {
+                extraInput.style.display = deliveryOption.checked ? "flex" : "none";
+            }
+
+            deliveryOption.addEventListener("change", toggleInput);
+            pickupOption.addEventListener("change", toggleInput);
+        });
+    </script>
+</main>
+{%endblock%}

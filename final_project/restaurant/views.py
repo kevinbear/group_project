@@ -33,5 +33,8 @@ def signup(request):
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
 
+def shopping_cart(request):
+    return render(request, 'shopping_cart.html')
+
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
