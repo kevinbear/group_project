@@ -4,7 +4,7 @@ from . import views
 from .views import signup, logout_view, login_view
 
 urlpatterns = [
-    path('ajax/', views.ajax_view, name='ajax_view'),
+    # path('ajax/', views.ajax_view, name='ajax_view'),
     path('about', views.about, name='about'),
     path('menu', views.menu, name='menu'),
     path('home', views.home, name='home'),
