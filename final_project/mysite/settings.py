@@ -26,6 +26,8 @@ if RENDER:
     PORT = os.getenv("PORT", "8000")
     SECRET_KEY = os.environ.get("SECRET_KEY")
     ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")  # Split by space for multiple hosts (return a list)
+    print(f"ALLOWED_HOSTS from env: {os.environ.get('ALLOWED_HOSTS')}")
+    print(f"Parsed ALLOWED_HOSTS: {ALLOWED_HOSTS}")
 else:
     SECRET_KEY = 'django-insecure-!1*yp@e$*%8r=r4(hcdr5^4hiz5%#d5^jcgt0go_!q7-=s(e_1'
     # SECURITY WARNING: don't run with debug turned on in production!
