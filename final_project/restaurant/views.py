@@ -2,14 +2,22 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from restaurant.forms import SignupForm
 from restaurant.models import CustomUser
-
+from .models import MenuItem, CustomUser, UserProfile, Order  # Import your model
 # Create your views here.ß
 
 def home(request):
     return render(request, 'home.html')
 
 def menu(request):
-    return render(request, 'menu.html')
+    breakfast_items = MenuItem.objects.filter(category='breakfast')
+    lunch_items = MenuItem.objects.filter(category='lunch')
+    dinner_items = MenuItem.objects.filter(category='dinner')
+
+    return render(request, 'menu.html', {
+        'breakfast_items': breakfast_items,
+        'lunch_items': lunch_items,
+        'dinner_items': dinner_items,
+    })
 
 def about(request):
     return render(request, 'about.html')

@@ -52,3 +52,43 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.email}'s Profile"
+
+class MenuItem(models.Model) :
+    CATEGORY_CHOICES = [
+        ('breakfast', 'Breakfast'),
+        ('lunch', 'Lunch'),
+        ('dinner', 'Dinner'),
+    ]
+    
+    item_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.CharField(
+        max_length=50,
+        choices=CATEGORY_CHOICES,  # Apply the choices to the category field
+        default='breakfast'  # Set a default category if needed
+    )
+    
+    image = models.ImageField(upload_to='menu_images/', blank=True, null=True)  # Image field to store product images
+    combo_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Optional combo price
+    def __str__(self):
+        return f"{self.name} - ${self.price} ({self.get_category_display()})"  # This should work
+
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+    
+    order_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="orders")
+    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name="orders")
+    quantity = models.PositiveIntegerField()
+    order_date = models.DateTimeField(auto_now_add=True) # Automatically set the date when the order is created
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) # Total price of the order
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')  # Order status
+    
+    def __str__(self):
+        return f"Order {self.id} - {self.user.username} - {self.status}"

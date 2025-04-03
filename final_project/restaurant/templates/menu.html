@@ -1,189 +1,86 @@
 {%extends "base.html"%} {%block placeholder%} {% load static %}
 <div class="container">
-    <div class="row text-center">
-        <h1>Our Menu</h1>
-    </div>
-    <div class="row">
-        <section class="menu-section">
-            <h2>Breakfast</h2>
-            <p>
-              All entrees come with a side & bakery item choice of: Hashbrowns, Fresh
-              fruit, Cinnamonroll, Muffin, White, Wheat, Sourdough.
-            </p>
-            <ul>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/pancakes.jpg' %}"
-                  alt="Pancakes"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Pancakes - $6.99</span>
-                  <p>Add $4.99 for combo</p>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/frenchtoast.jpg'%}"
-                  alt="French Toast"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>French Toast - $7.99</span>
-                  <p>Add $4.99 for combo</p>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/waffles.jpg'%}"
-                  alt="Waffles"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Waffles - $7.99</span>
-                  <p>Add $4.99 for combo</p>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/omelette.jpg'%}"
-                  alt="Omelette"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Omelette - $9.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/eggs.jpg'%}"
-                  alt="2 Eggs & Bacon or Sausage"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>2 Eggs & Bacon or Sausage - $8.49</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/oatmeal.jpg'%}"
-                  alt="Maple Oatmeal"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Maple Oatmeal - $5.49</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/fruitbowl.jpg'%}"
-                  alt="Fruit Bowl"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Fruit Bowl - $6.59</span>
-                </div>
-              </li>
-            </ul>
-          </section>
-    </div>
-    <div class="row">
-        <section class="menu-section">
-            <h2>Lunch</h2>
-            <p>All entrees come with a side choice of: Fries, Side salad, or Soup.</p>
-            <ul>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/chickensandwich.jpg'%}"
-                  alt="Grilled Chicken Sandwich"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Grilled Chicken Sandwich - $8.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/blt.jpg'%}"
-                  alt="BLT Sandwich"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>BLT Sandwich - $9.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/hamsandwich.jpg'%}"
-                  alt="Ham and Swiss Sandwich"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Ham and Swiss Sandwich - $7.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/caesar.jpg'%}"
-                  alt="Caesar Salad"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Caesar Salad - $9.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/cobb.jpg'%}"
-                  alt="CA Cobb Salad"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>CA Cobb Salad - $15.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/cheeseburger.jpg'%}"
-                  alt="Cheeseburger"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Cheeseburger - $16.49</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/spaghetti.jpg'%}"
-                  alt="Spaghetti"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Spaghetti - $14.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/tomatosoup.jpg'%}"
-                  alt="Tomato Basil Soup"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Tomato Basil Soup - $6.99</span>
-                </div>
-              </li>
-              <li class="menu-item">
-                <img
-                  src="{% static 'image/chickensoup.jpg'%}"
-                  alt="Chicken Soup"
-                  class="menu-img"
-                />
-                <div class="food-info">
-                  <span>Chicken Soup - $7.99</span>
-                </div>
-              </li>
-            </ul>
-          </section>
-    </div>
+  <div class="row text-center">
+    <h1>Our Menu</h1>
+  </div>
+  <div class="row">
+    <section class="menu-section">
+      <h2>Breakfast</h2>
+      <p>
+        All entrees come with a side & bakery item choice of: Hashbrowns, Fresh
+        fruit, Cinnamonroll, Muffin, White, Wheat, Sourdough.
+      </p>
+      <ul>
+        {% for item in breakfast_items %}
+        <li class="menu-item">
+          <img
+            src="{{ item.image.url }}"
+            alt="{{ item.name }}"
+            class="menu-img"
+          />
+          <div class="food-info">
+            <span> {{ item.name }} - ${{ item.price }} </span>
+            {% if item.combo_price %}
+            <p>Add ${{ item.combo_price }} for combo</p>
+            {% endif %}
+          </div>
+        </li>
+        {% empty %}
+        <li>No breakfast items available.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+  <div class="row">
+    <section class="menu-section">
+      <h2>Lunch</h2>
+      <p>All entrees come with a side choice of: Fries, Side salad, or Soup.</p>
+      <ul>
+        {% for item in lunch_items %}
+        <li class="menu-item">
+          <img
+            src="{{ item.image.url }}"
+            alt="{{ item.name }}"
+            class="menu-img"
+          />
+          <div class="food-info">
+            <span> {{ item.name }} - ${{ item.price }} </span>
+            {% if item.combo_price %}
+            <p>Add ${{ item.combo_price }} for combo</p>
+            {% endif %}
+          </div>
+        </li>
+        {% empty %}
+        <li>No breakfast items available.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+  <div class="row">
+    <section class="menu-section">
+      <h2>Dinner</h2>
+      <p>All entrees come with a side choice of: Fries, Side salad, or Soup.</p>
+
+      <ul>
+        {% for item in dinner_items %}
+        <li class="menu-item">
+          <img
+            src="{{ item.image.url }}"
+            alt="{{ item.name }}"
+            class="menu-img"
+          />
+          <div class="food-info">
+            <span> {{ item.name }} - ${{ item.price }} </span>
+            {% if item.combo_price %}
+            <p>Add ${{ item.combo_price }} for combo</p>
+            {% endif %}
+          </div>
+        </li>
+        {% empty %}
+        <li>No breakfast items available.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
 </div>
 {%endblock%}
