@@ -57,12 +57,14 @@ Once the environment is set up, navigate to the project folder and start the ser
 #### Windows
 ```powershell
 cd final_project
+python manage.py collectstatic --noinput
 python manage.py runserver --insecure
 ```
 
 #### macOS/Linux
 ```bash
 cd final_project
+python manage.py collectstatic --noinput
 python manage.py runserver --insecure
 ```
 
