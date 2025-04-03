@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(f"BASE_DIR: {BASE_DIR}")  # Debugging print
  
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,14 +27,14 @@ if RENDER:
     SECRET_KEY = os.environ.get("SECRET_KEY")
     ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")  # Split by space for multiple hosts (return a list)
 else:
-    print("We are in local environment")
     SECRET_KEY = 'django-insecure-!1*yp@e$*%8r=r4(hcdr5^4hiz5%#d5^jcgt0go_!q7-=s(e_1'
     # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
+    DEBUG = False
     PORT = os.getenv("PORT", "8000")
     ALLOWED_HOSTS = [
         '*'
     ]
+    print(f"Run on local environment. DEBUG Mode: {DEBUG}")
 # -------------------------------------------------------------
 
 # Application definition
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # For serving static files (media)
 ]
 
 REST_FRAMEWORK = {
@@ -144,10 +145,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "restaurant" / "static",
 ]
 STATIC_ROOT = BASE_DIR / "restaurant" / "staticfiles"  # Add this line for production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # WhiteNoise storage
 
 # For upload menu images and user profile pictures
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

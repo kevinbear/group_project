@@ -16,21 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import handler404
-from restaurant.views import custom_404
 from django.conf import settings
 from django.conf.urls.static import static
-
-handler404 = custom_404  # Custom 404 error handler
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("restaurant/", include('restaurant.urls')),
 ]
 
-if not settings.DEBUG:  # Serve static files in development with DEBUG=False
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files with a custom view when DEBUG = False
+if not settings.DEBUG:
+    urlpatterns += [
+        path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+    ]
 
+# Optional: Serve static/media in debug mode for consistency
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

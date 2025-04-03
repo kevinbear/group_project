@@ -34,10 +34,13 @@ else
     echo -e "\033[1;31m❌ pyenv is not installed. Installing now...\033[0m"
     brew install pyenv
     echo -e "\033[1;33mAdding pyenv to shell configuration...\033[0m"
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-    echo 'eval "$(pyenv init --path)"' >> ~/.zshrc
-    source ~/.zshrc
+    
+    for shell_config in ~/.bashrc ~/.zshrc; do
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> "$shell_config"
+        echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> "$shell_config"
+        echo 'eval "$(pyenv init --path)"' >> "$shell_config"
+    done
+    source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null
 fi
 
 # Install Python 3.12 using pyenv
@@ -55,9 +58,20 @@ echo -e "\033[1;36mCreating virtual environment (macos_dev_env)...\033[0m"
 python3 -m venv macos_dev_env
 echo -e "\033[1;32m✔ Virtual environment created: macos_dev_env\033[0m"
 
-# Activate Virtual Environment
-echo -e "\033[1;33mTo activate the virtual environment, run:\033[0m"
-echo -e "\033[1;37msource macos_dev_env/bin/activate\033[0m"
+# Add virtual environment activation to shell configuration
+echo -e "\033[1;33mAdding virtual environment activation to shell configuration...\033[0m"
+for shell_config in ~/.bashrc ~/.zshrc; do
+    echo 'source $HOME/macos_dev_env/bin/activate' >> "$shell_config"
+done
+source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null
+
+# Set Environment Variable RENDER=False
+echo -e "\033[1;33mSetting environment variable RENDER=False...\033[0m"
+for shell_config in ~/.bashrc ~/.zshrc; do
+    echo 'export RENDER="False"' >> "$shell_config"
+done
+source ~/.zshrc 2>/dev/null || source ~/.bashrc 2>/dev/null
+echo -e "\033[1;32m✔ Environment variable RENDER set successfully!\033[0m"
 
 # Install Required Packages
 echo -e "\033[1;36mInstalling dependencies from requirements.txt...\033[0m"
