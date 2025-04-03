@@ -7,12 +7,12 @@ from .models import CustomUser, UserProfile, MenuItem, Order
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('email', 'role', 'is_staff', 'is_superuser', 'is_active', 'date_joined')
-    list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
-    search_fields = ('email',)
-    ordering = ('email',)
+    list_display = ('email', 'first_name', 'last_name', 'role', 'is_staff', 'is_superuser', 'is_active', 'date_joined')
+    list_filter = ('role', 'is_staff', 'is_superuser', 'is_active', 'first_name', 'last_name')
+    search_fields = ('email','first_name', 'last_name')
+    ordering = ('email', 'first_name', 'last_name')
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
         ('Personal Info', {'fields': ('role',)}),
         ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_active')}),
         ('Important Dates', {'fields': ('last_login', 'date_joined')}),

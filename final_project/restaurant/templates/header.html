@@ -1,103 +1,172 @@
 {% load static %}
 <header class="bg-light" id="header_section">
   <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container-fluid">
-          <a class="navbar-brand ps-5" href="{% url 'home' %}">
-              <img src="{% static 'image/restaurant_logo.jpg' %}" alt="logo" id="logo">
-              <b class="h3">Restaurant Web App</b>
-          </a>
-          <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-          >
-              <span class="navbar-toggler-icon"></span>
-          </button>
-      </div>
+    <div class="container-fluid">
+      <a class="navbar-brand ps-5" href="{% url 'home' %}">
+        <img
+          src="{% static 'image/restaurant_logo.jpg' %}"
+          alt="logo"
+          id="logo"
+        />
+        <b class="h3">Restaurant Web App</b>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
-              <li class="nav-item">
-                  <a class="nav-link active d-flex align-items-center justify-content-center mx-auto" href="{% url 'menu' %}">
-                      <i class="fas fa-utensils me-2"></i> <span>Menu</span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active d-flex align-items-center justify-content-center mx-auto" href="{% url 'ordering' %}">
-                      <i class="fas fa-clipboard-list me-2"></i> <span>Order</span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active d-flex align-items-center justify-content-center mx-auto" href="{% url 'shopping_cart' %}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Shopping Cart">
-                      <i class="fas fa-shopping-cart me-2"></i>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active d-flex align-items-center justify-content-center mx-auto" href="{% url 'about' %}">
-                      <i class="fas fa-info-circle me-2"></i> <span>About</span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="btn btn-primary ms-2 me-3 text-white text-decoration-none text-nowrap d-flex align-items-center justify-content-center" href="{% url 'signup' %}" id="signup_link">
-                      <i class="fas fa-user-plus me-2"></i> <span>Sign Up</span>
-                  </a>
-              </li>
-          </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
+        <li class="nav-item">
+          <a
+            class="nav-link active d-flex align-items-center justify-content-center mx-auto"
+            href="{% url 'menu' %}"
+          >
+            <i class="fas fa-utensils me-2"></i> <span>Menu</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link active d-flex align-items-center justify-content-center mx-auto"
+            href="{% url 'ordering' %}"
+          >
+            <i class="fas fa-clipboard-list me-2"></i> <span>Order</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link active d-flex align-items-center justify-content-center mx-auto"
+            href="{% url 'shopping_cart' %}"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Shopping Cart"
+          >
+            <i class="fas fa-shopping-cart me-2"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link active d-flex align-items-center justify-content-center mx-auto"
+            href="{% url 'about' %}"
+          >
+            <i class="fas fa-info-circle me-2"></i> <span>About</span>
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a
+              class="nav-link active d-flex align-items-center justify-content-center mx-auto"
+              href="{% url 'logout' %}"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Log out"
+            >
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="btn btn-primary ms-2 me-3 text-white text-decoration-none text-nowrap d-flex align-items-center justify-content-center mx-auto"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="{{ context | pprint }}'s Profile"
+            href="{% url 'user_profile' %}"
+          >
+          <i class="fa-solid fa-circle-user"></i>
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item adjustment-bottom">
+          <a
+            class="btn btn-outline-primary ms-2 me-2 text-blue text-decoration-none text-nowrap d-flex align-items-center justify-content-center mx-auto"
+            href="{% url 'signup' %}"
+            id="signup_link"
+          >
+            <i class="fas fa-user-plus me-2"></i> <span>Sign Up</span>
+          </a>
+        </li>
+        <li class="nav-item">
+            <a
+              class="btn btn-primary ms-2 me-3 text-white text-decoration-none text-nowrap d-flex align-items-center justify-content-center mx-auto"
+              href="{% url 'login' %}"
+              id="signup_link"
+            >
+            <i class="fa-solid fa-right-to-bracket me-2"></i> <span>Login</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
   </nav>
 
   <style>
-      #logo {
-          width: 2.5rem;
-          height: 2.5rem;
-          border-radius: 100%;
-          margin-top: 0.5rem;
-          margin-bottom: 1.25rem;
-      }
+    #logo {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
 
-      .navbar-nav .nav-item {
-          display: flex;
-          align-items: center;
-      }
+    .navbar-nav .nav-item {
+      display: flex;
+      align-items: center;
+    }
 
-      .nav-link {
-          display: flex;
-          align-items: center;
-      }
+    .nav-link {
+      display: flex;
+      align-items: center;
+    }
 
-      .nav-link i {
-          font-size: 1.2rem; /* Adjust icon size */
-      }
+    .nav-link i {
+      font-size: 1.2rem; /* Adjust icon size */
+    }
 
-      .nav-link:hover i, 
-      .nav-link:hover span {
-          color: Dodgerblue !important; /* Apply color to both icon and text */
-      }
+    .nav-link:hover i,
+    .nav-link:hover span {
+      color: Dodgerblue !important; /* Apply color to both icon and text */
+    }
+    .adjustment-bottom{
+        margin-bottom: 0rem !important;
+    }
 
-      /* Center navbar items in collapsed mode */
-      @media (max-width: 992px) {
-          .navbar-nav {
-              justify-content: center !important; /* Center items in collapsed mode */
-          }
-          .nav-item > #signup_link {
-            margin: auto !important;
-            width: 80% !important;
-            
-          }
+    /* Center navbar items in collapsed mode */
+    @media (max-width: 992px) {
+      .navbar-nav {
+        justify-content: center !important; /* Center items in collapsed mode */
       }
+      .nav-item > #signup_link {
+        margin: auto !important;
+        width: 80% !important;
+      }
+      .adjustment-bottom{
+        margin-bottom: 0.5rem !important;
+      }
+    }
+    @media (max-width: 768px){
+        .adjustment-bottom{
+            margin-bottom: 0.5rem !important;
+        }
+    }
   </style>
 
   <script>
-      // Initialize tooltips
-      document.addEventListener('DOMContentLoaded', function () {
-          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-          tooltipTriggerList.map(function (tooltipTriggerEl) {
-              new bootstrap.Tooltip(tooltipTriggerEl);
-          });
+    // Initialize tooltips
+    document.addEventListener("DOMContentLoaded", function () {
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      tooltipTriggerList.map(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl);
       });
+    });
   </script>
 </header>

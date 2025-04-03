@@ -4,5 +4,8 @@ staticfiles/
 macOS_dev_env/
 windows_dev_env/
 win_dev_env/
+frontend/*
+work_with_vue/
+node_modules/
 .vscode/
 .DS_Store

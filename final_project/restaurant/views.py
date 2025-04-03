@@ -1,12 +1,36 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from django.contrib import messages
-from restaurant.forms import SignupForm
+from django.contrib.auth import get_user_model, logout, authenticate, login
+from restaurant.forms import SignupForm, LoginForm
 from restaurant.models import CustomUser
 from .models import MenuItem, CustomUser, UserProfile, Order  # Import your model
-# Create your views here.ß
+# Create your views here
+
+def ajax_view(request):
+    if request.method == 'POST':
+        # Your logic here (e.g., check if the user is logged in)
+        message = "This is a message from the server"
+        
+        # Return the message as JSON
+        return JsonResponse({'message': message})
+
+    # In case the request is not POST, return a response
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def home(request):
-    return render(request, 'home.html')
+    context = {}  # Create an empty context dictionary
+    if request.user.is_authenticated:
+        user = request.user
+        messages.info(request, f"Welcome back, {user.first_name}!")  # Use first_name for a more personal touch
+        if hasattr(user, 'role'):  # Ensure 'role' exists
+            context['user'] = user
+            context['role'] = user.role
+
+            if user.role == 'manager':  # Correct spelling
+                context['admin'] = user  # Keeping your logic
+
+    return render(request, 'home.html', context)
 
 def menu(request):
     breakfast_items = MenuItem.objects.filter(category='breakfast')
@@ -25,20 +49,56 @@ def about(request):
 def ordering(request):
     return render(request, 'ordering.html')
 
-def login(request):
-    return render(request, 'login.html')
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            # Authenticate user
+            user = authenticate(request, email=email, password=password)
+
+            if user is not None:
+                login(request, user)  # Log the user in
+                messages.success(request, f"Welcome {user.first_name}, login successful!")
+                return redirect('home')  # Redirect to home page after successful login
+            else:
+                messages.error(request, "Invalid email or password.")
+    
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
 
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # Hash the password
-            user.save()
-            messages.success(request, "Account created successfully!")
-            return redirect('login')  # Redirect to the login page or another page
+            try:
+                print("DEBUG: Form is valid")  # Debugging print
+                # Create user using CustomUser model
+                User = get_user_model()
+                user = User.objects.create_user(
+                    email=form.cleaned_data['email'],  # Use email as the username
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    password=form.cleaned_data['password']
+                )
+                print(f"DEBUG: User {user.email} created successfully")  # Debugging print
+                messages.success(request, "Account created successfully!")
+                return redirect('login')  # Redirect to login page
+            except Exception as e:
+                print(f"DEBUG: Error creating user - {e}")  # Debugging print
+                messages.error(request, f"Error creating user: {e}")
+        else:
+            print("DEBUG: Form is NOT valid")  # Debugging print
+            print("DEBUG: Form errors:", form.errors)  # Show form errors in console
+            messages.error(request, "There was an error with your form.")
+
     else:
         form = SignupForm()
+
     return render(request, 'signup.html', {'form': form})
 
 def shopping_cart(request):
@@ -49,3 +109,16 @@ def checkout(request):
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
+
+def logout_view(request):
+    logout(request)  # Logs out the user
+    return redirect('home')  # Redirect after logout
+
+def user_profile(request):
+    if request.user.is_authenticated:
+        user = request.user
+        profile = {} # user.profile  # Assuming you have a OneToOne relationship with UserProfile
+        return render(request, 'user_profile.html', {'profile': profile})
+    else:
+        messages.error(request, "You need to be logged in to view this page.")
+        return redirect('login')

@@ -26,6 +26,7 @@ handler404 = custom_404  # Custom 404 error handler
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("restaurant/", include('restaurant.urls')),
+    path("work_with_vue/", include('work_with_vue.urls')),
 ]
 
 if not settings.DEBUG:  # Serve static files in development with DEBUG=False

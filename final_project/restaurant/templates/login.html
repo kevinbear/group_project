@@ -4,6 +4,19 @@
 <link href="{% static 'css/signup.css'%}" rel="stylesheet" />
 {%endblock%}
 {%block placeholder%} 
+<!-- Toast Container -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <!-- Error Message will go here -->
+        </div>
+    </div>
+</div>
+<!-- Main -->
 <div class="container-fluid signup">
     <div class="row">
         <!-- Left Column (Restaurant Image) -->
@@ -21,7 +34,7 @@
                 <h1>Login</h1>
             </div>
             <div class="row">
-                <form method="POST">
+                <form method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
                     <div class="container">
                         <!-- Email -->
@@ -50,8 +63,8 @@
                         <!-- Buttons -->
                         <div class="row mt-5 mb-4">
                             <div class="d-flex justify-content-between">
-                                <input type="button" class="btn btn-info rounded-pill w-25 me-3" value="Login">
-                                <input type="button" class="btn btn-outline-info rounded-pill w-25" value="Sign up">
+                                <input type="submit" class="btn btn-info rounded-pill w-25 me-3" value="Login">
+                                <a class="btn btn-outline-info rounded-pill w-25" href="{% url 'signup' %}">Sign Up</a>
                             </div>
                         </div>                        
                     </div>
@@ -59,6 +72,24 @@
             </div>
         </div>
     </div>
+    <!-- Error Messages -->
+    <div class="row">
+        {% if messages %}
+        <div class="alert alert-danger">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %} {% if form.errors %}
+        <div class="alert alert-warning">
+          {% for field, errors in form.errors.items %}
+          <strong>{{ field }}:</strong>
+          {% for error in errors %}
+          <p>{{ error }}</p>
+          {% endfor %} {% endfor %}
+        </div>
+        {% endif %}
+      </div>
 </div>
 
 <!-- Password Toggle Script -->
@@ -76,6 +107,11 @@
             icon.classList.remove("fa-eye-slash");
             icon.classList.add("fa-eye");
         }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var toastElement = document.getElementById("liveToast");
+        var toastBody = toastElement.querySelector(".toast-body");
     });
 </script>
 

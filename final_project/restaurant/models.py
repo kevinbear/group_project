@@ -29,7 +29,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('customer', 'Customer'),
         ('manager', 'Manager'),
     )
-
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='customer')  # Role field
     is_active = models.BooleanField(default=True)
