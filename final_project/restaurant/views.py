@@ -7,17 +7,6 @@ from restaurant.models import CustomUser
 from .models import MenuItem, CustomUser, UserProfile, Order  # Import your model
 # Create your views here
 
-def ajax_view(request):
-    if request.method == 'POST':
-        # Your logic here (e.g., check if the user is logged in)
-        message = "This is a message from the server"
-        
-        # Return the message as JSON
-        return JsonResponse({'message': message})
-
-    # In case the request is not POST, return a response
-    return JsonResponse({'error': 'Invalid request'}, status=400)
-
 def home(request):
     context = {}  # Create an empty context dictionary
     if request.user.is_authenticated:
