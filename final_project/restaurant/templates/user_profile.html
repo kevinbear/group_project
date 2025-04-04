@@ -1,9 +1,308 @@
 {% extends "base.html" %}
 {% load static %}
 {% block placeholder %}
-<main class="container">
-    <div class="row">
-        <h1>User Profile</h1>
+<main class="container-fluid">
+    <div class="row upper-banner">
+    </div>
+    <div class="row lower-banner d-flex flex-column border border-bottom-2">
+        <div class="col text-start d-flex flex-row">
+            <div class="profile-frame">
+                <img src="{% static 'profile_images/marine_animal_1.jpg'%}" alt="profile_image" class="profile-img img-fluid" />
+            </div>
+            <h2 class="text-black fw-bold mb-0 username">{{ user.first_name }} {{ user.last_name }}</h1>
+            <div class="ms-auto" id="control-items">
+                <button class="btn btn-outline-primary ms-2 py-2"><i class="fa-solid fa-ellipsis fa-lg"></i></button>
+                <button class="btn btn-outline-primary py-2 ms-2">Order</i></button>
+                <button class="btn btn-outline-primary py-2 ms-2"><i class="fa-solid fa-sun fa-lg"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row side-bar">
+        <div class="col-md-2 border-end border-2 my-4">
+            <div class="d-flex flex-column gap-4 align-items-center">
+                <div class="text-center">
+                    <h3>
+                        <b>User Profile</b>
+                    </h3>
+                </div>
+                <div class="d-flex align-items-center mx-auto user-sidebar active" data-target="user-info">
+                    <i class="fa-solid fa-user-large fa-lg me-2"></i>
+                    <h4 class="mb-0">User Info</h4>
+                </div>
+                <div class="d-flex align-items-center mx-auto user-sidebar" data-target="favorite">
+                    <i class="fa-solid fa-heart fa-lg me-2"></i>
+                    <h4 class="mb-0">Favorite</h4>
+                </div>
+                <div class="d-flex align-items-center mx-auto user-sidebar" data-target="settings">
+                    <i class="fa-solid fa-gear fa-lg me-2"></i>
+                    <h4 class="mb-0">Settings</h4>
+                </div>
+                <div class="d-flex align-items-center mx-auto user-sidebar" data-target="order-history">
+                    <i class="fa-solid fa-receipt fa-lg me-2"></i>
+                    <h4 class="mb-0">Order History</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col user-info" id="user-info">
+            <h3 class="mt-3">
+                <b>User Information</b>
+            </h3>
+            <form method="post" enctype="multipart/form-data" action="" class="needs-validation border rounded-3 mt-4 p-3" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{ user.first_name }}" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid first name.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{ user.last_name }}" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid last name.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid email address.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="phone_number" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="No phone number" value="{{ user.phone_number }}">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Home Address</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="No address" value="{{ user.address }}">
+                </div>
+                <div class="mb-3">
+                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="No date of birth" value="{{ user.date_of_birth }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Profile Picture</label>
+                    <div class="mb-3">
+                        <img src="{{ user.profile_picture.url }}" alt="user_image" class="img-thumbnail">
+                    </div>
+                    <input type="file" class="form-control" name="profile_picture" id="user_profile_image">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+            <script>
+                // Bootstrap validation script
+                (function () {
+                    'use strict'
+                    const forms = document.querySelectorAll('.needs-validation')
+                    Array.from(forms).forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+                })()
+            </script>
+        </div>
+        <div class="col favorite" id="favorite" style="display: none;">
+            <h3 class="mt-3">
+                <b>Favorite</b>
+            </h3>
+        </div>
+        <div class="col settings" id="settings" style="display: none;">
+            <h3 class="mt-3">
+                <b>Settings</b>
+            </h3>
+        </div>
+        <div class="col order-history" id="order-history" style="display: none;">
+            <h3 class="mt-3">
+                <b>Order History</b>
+            </h3>
+            <table id="history_menu_table" class="display">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Item</th>
+                    <th>Quatity</th>
+                    <th>Price</th>
+                    <th>Order Date</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>00001</td>
+                    <td>Lobser</td>
+                    <td>2</td>
+                    <td>$30</td>
+                    <td>01/01/24</td>
+                    <td>$60</td>
+                    <td>completed</td>
+                  </tr>
+                  <tr>
+                    <td>00002</td>
+                    <td>NY Stripe</td>
+                    <td>2</td>
+                    <td>$10</td>
+                    <td>01/01/25</td>
+                    <td>$20</td>
+                    <td>processing</td>
+                  </tr>
+                  <tr>
+                    <td>00003</td>
+                    <td>chessburger</td>
+                    <td>4</td>
+                    <td>$20</td>
+                    <td>03/01/25</td>
+                    <td>$80</td>
+                    <td>cancelled</td>
+                  </tr>
+                  <!-- Add more rows as needed -->
+                  <tr>
+                    <td>00004</td>
+                    <td>chessburger</td>
+                    <td>1</td>
+                    <td>$20</td>
+                    <td>03/028/25</td>
+                    <td>$20</td>
+                    <td>pending</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
     </div>
 </main>
+<style>
+    .side-bar {
+        height: 80vh;
+    }
+    .user-sidebar {
+        background: rgb(255, 255, 255);
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+    .user-sidebar:hover {
+        background: rgb(64, 157, 244);
+        cursor: pointer;
+        animation: smooth-bounce 0.6s ease-in-out;
+    }
+    @keyframes smooth-bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+    .user-sidebar.active {
+        background: rgb(64, 157, 244);
+        color: white;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-sidebar.active h4 {
+        color: white;
+    }
+
+    .user-sidebar.active i {
+        color: white;
+    }
+    .username {
+        padding-left: 6rem;
+        padding-top: 1rem;
+    }
+    #control-items {
+        padding-top: 1rem;
+        padding-right: 2rem;
+    }
+    .buffer {
+        width: 10px;
+        height: 10px;
+    }
+    .upper-banner {
+        background: rgb(174,238,195);
+        background: radial-gradient(circle, rgba(174,238,195,1) 0%, rgba(163,212,212,1) 44%, rgba(163,211,212,1) 45%, rgba(148,180,233,1) 100%);
+        height: 25vh;
+        max-height: 200px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+    .lower-banner {
+        height: 20vh;
+        max-height: 150px;
+    }
+    .profile-frame {
+        background: rgb(255, 255, 255);
+        height: 10.5rem;
+        width: 10.5rem;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.2rem; /* Reduce padding to make the distance smaller */
+        border: 0.1rem solid rgb(124, 124, 124); /* Set border width and color */
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(0, 0, 0, 0.2),;
+        transform: translate(40%, -30%);
+    }
+    .profile-img {
+        border-radius: 100%;
+        height: 9.6rem; /* Adjust height to fit closer to the div */
+        width: 9.6rem; /* Adjust width to fit closer to the div */
+    }
+    @media (max-width: 768px) {
+        .profile-frame {
+            background: rgb(255, 255, 255);
+            height: 7rem;
+            width: 7rem;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.2rem; /* Reduce padding to make the distance smaller */
+            border: 0.1rem solid rgb(124, 124, 124); /* Set border width and color */
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(0, 0, 0, 0.2),;
+            transform: translate(20%, -30%);
+        }
+        .profile-img {
+            border-radius: 100%;
+            height: 6.5rem; /* Adjust height to fit closer to the div */
+            width: 6.5rem; /* Adjust width to fit closer to the div */
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebarItems = document.querySelectorAll('.user-sidebar');
+        const sections = document.querySelectorAll('.col');
+
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function () {
+                // Remove 'active' class from all sidebar items
+                sidebarItems.forEach(i => i.classList.remove('active'));
+
+                // Add 'active' class to the clicked item
+                this.classList.add('active');
+
+                // Hide all sections
+                sections.forEach(section => section.style.display = 'none');
+
+                // Show the target section
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).style.display = 'block';
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+      $('#history_menu_table').DataTable();
+    });
+</script>
 {% endblock %}
