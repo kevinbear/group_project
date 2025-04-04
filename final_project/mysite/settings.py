@@ -31,7 +31,7 @@ if RENDER:
 else:
     SECRET_KEY = 'django-insecure-!1*yp@e$*%8r=r4(hcdr5^4hiz5%#d5^jcgt0go_!q7-=s(e_1'
     # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = False
+    DEBUG = True
     PORT = os.getenv("PORT", "8000")
     ALLOWED_HOSTS = [
         '*'
@@ -73,6 +73,7 @@ ROOT_URLCONF = 'mysite.urls'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'restaurant.auth_backends.EmailBackend'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

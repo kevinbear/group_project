@@ -72,12 +72,12 @@
             <i class="fa-solid fa-right-from-bracket me-2"></i>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mx-auto">
           <a
-            class="btn btn-primary ms-2 me-3 text-white text-decoration-none text-nowrap d-flex align-items-center justify-content-center mx-auto"
+            class="btn btn-primary ms-2 me-3 text-white text-decoration-none text-nowrap d-flex align-items-center justify-content-center"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="{{ context | pprint }}'s Profile"
+            title="{{ user.first_name }}'s Profile"
             href="{% url 'user_profile' %}"
           >
           <i class="fa-solid fa-circle-user"></i>

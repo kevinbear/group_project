@@ -1,194 +1,226 @@
-{%extends "base.html"%}
-{% load static %}
-{%block stylesheet%}
+{%extends "base.html"%} {% load static %} {%block stylesheet%}
 <link href="{% static 'css/signup.css'%}" rel="stylesheet" />
-{%endblock%}
-{%block placeholder%} 
+{%endblock%} {%block placeholder%}
 <!-- Toast Container -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Notification</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            <!-- Error Message will go here -->
-        </div>
+  <div
+    id="liveToast"
+    class="toast hide"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="toast-header">
+      <strong class="me-auto">Notification</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
     </div>
+    <div class="toast-body">
+      <!-- Error Message will go here -->
+    </div>
+  </div>
 </div>
 <!-- Main -->
 <div class="container-fluid signup">
-    <div class="row">
-        <!-- Left Column (Restaurant Image) -->
-        <div class="left-column col position-relative">
-            <div class="restaurant-image d-flex justify-content-center align-items-center">
-            </div>
-            <span class="floating-text text-white text-center">
-                <h1>Hello,</h1>
-                <h1 class="fw-bold">Welcome!</h1>
-            </span>
-        </div>
-        <!-- Right Column (login form)-->
-        <div class="col d-flex flex-column justify-content-center vh-100">
-            <div class="row text-white text-center">
-                <h1>Login</h1>
-            </div>
-            <div class="row">
-                <form method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    <div class="container">
-                        <!-- Email -->
-                        <div class="row my-4">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="text" id="email" name="email" class="form-control" required>
-                                    <label for="email">Email</label>
-                                </div>
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            </div>
-                        </div>
-
-                        <!-- Password -->
-                        <div class="row mt-5 mb-4">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
-                                    <label for="password">Password</label>
-                                </div>
-                                <span class="input-group-text">
-                                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Buttons -->
-                        <div class="row mt-5 mb-4">
-                            <div class="d-flex justify-content-between">
-                                <input type="submit" class="btn btn-info rounded-pill w-25 me-3" value="Login">
-                                <a class="btn btn-outline-info rounded-pill w-25" href="{% url 'signup' %}">Sign Up</a>
-                            </div>
-                        </div>                        
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="row">
+    <!-- Left Column (Restaurant Image) -->
+    <div class="left-column col position-relative">
+      <div
+        class="restaurant-image d-flex justify-content-center align-items-center"
+      ></div>
+      <span class="floating-text text-white text-center">
+        <h1>Hello,</h1>
+        <h1 class="fw-bold">Welcome!</h1>
+      </span>
     </div>
-    <!-- Error Messages -->
-    <div class="row">
-        {% if messages %}
-        <div class="alert alert-danger">
-          {% for message in messages %}
-          <p>{{ message }}</p>
-          {% endfor %}
-        </div>
-        {% endif %} {% if form.errors %}
-        <div class="alert alert-warning">
-          {% for field, errors in form.errors.items %}
-          <strong>{{ field }}:</strong>
-          {% for error in errors %}
-          <p>{{ error }}</p>
-          {% endfor %} {% endfor %}
-        </div>
-        {% endif %}
+    <!-- Right Column (login form)-->
+    <div class="col d-flex flex-column justify-content-center vh-100">
+      <div class="row text-white text-center">
+        <h1>Login</h1>
       </div>
+      <div class="row">
+        <form method="POST" action="{% url 'login' %}">
+          {% csrf_token %}
+          <div class="container">
+            <!-- Email -->
+            <div class="row my-4">
+              <div class="input-group">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    required
+                  />
+                  <label for="email">Email</label>
+                </div>
+                <span class="input-group-text"
+                  ><i class="fas fa-envelope"></i
+                ></span>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="row mt-5 mb-4">
+              <div class="input-group">
+                <div class="form-floating">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-control"
+                    placeholder=" "
+                    required
+                  />
+                  <label for="password">Password</label>
+                </div>
+                <span class="input-group-text">
+                  <i
+                    class="fas fa-eye"
+                    id="togglePassword"
+                    style="cursor: pointer"
+                  ></i>
+                </span>
+              </div>
+            </div>
+            <!-- Buttons -->
+            <div class="row mt-5 mb-4">
+              <div class="d-flex justify-content-between">
+                <input
+                  type="submit"
+                  class="btn btn-info rounded-pill w-25 me-3"
+                  value="Login"
+                />
+                <a
+                  class="btn btn-outline-info rounded-pill w-25"
+                  href="{% url 'signup' %}"
+                  >Sign Up</a
+                >
+              </div>
+            </div>
+            <!-- Error Messages -->
+            <div class="row">
+              {% if form.errors %}
+              <div class="alert alert-warning">
+                {% for field, errors in form.errors.items %}
+                <strong>{{ field }}:</strong>
+                {% for error in errors %}
+                <p>{{ error }}</p>
+                {% endfor %} {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Password Toggle Script -->
 <script>
-    document.getElementById("togglePassword").addEventListener("click", function () {
-        var passwordField = document.getElementById("password");
-        var icon = this;
+  document
+    .getElementById("togglePassword")
+    .addEventListener("click", function () {
+      var passwordField = document.getElementById("password");
+      var icon = this;
 
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-        } else {
-            passwordField.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-        }
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        passwordField.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        var toastElement = document.getElementById("liveToast");
-        var toastBody = toastElement.querySelector(".toast-body");
-    });
+  document.addEventListener("DOMContentLoaded", function () {
+    var toastElement = document.getElementById("liveToast");
+    var toastBody = toastElement.querySelector(".toast-body");
+  });
 </script>
 
 <!-- Add Dark Theme Styles -->
 <style>
-/* Dark Mode Styling for Input */
-.form-control {
+  /* Dark Mode Styling for Input */
+  .form-control {
     background-color: #222 !important; /* Dark background */
     color: #fff !important; /* White text */
     border: 1px solid #555 !important; /* Subtle border */
-}
+  }
 
-/* Remove default white background on focus */
-.form-control:focus {
+  /* Remove default white background on focus */
+  .form-control:focus {
     background-color: #222 !important;
     color: #fff !important;
     border-color: #bbb !important;
     box-shadow: none !important;
-}
+  }
 
-/* Floating label default styling */
-.form-floating label {
+  /* Floating label default styling */
+  .form-floating label {
     color: #aaa !important; /* Light gray label */
     background: transparent !important; /* Remove white box */
     padding: 0 0.5rem; /* Add padding to keep label text clear */
     transition: all 0.2s ease-in-out;
-}
+  }
 
-/* When the input is focused or has text, move label up */
-.form-floating .form-control:focus ~ label,
-.form-floating .form-control:not(:placeholder-shown) ~ label {
+  /* When the input is focused or has text, move label up */
+  .form-floating .form-control:focus ~ label,
+  .form-floating .form-control:not(:placeholder-shown) ~ label {
     color: #fff !important; /* Make label white */
     font-weight: bold;
     transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem); /* Position label properly */
     background-color: transparent !important; /* Ensure no white box */
     padding: 0 5px;
-}
+  }
 
-/* Hide the placeholder to prevent overlap */
-.form-floating .form-control::placeholder {
+  /* Hide the placeholder to prevent overlap */
+  .form-floating .form-control::placeholder {
     color: transparent !important;
-}
+  }
 
-/* Fix Bootstrap's default background issue */
-.form-floating > label::after {
+  /* Fix Bootstrap's default background issue */
+  .form-floating > label::after {
     background-color: transparent !important; /* Remove Bootstrap's white box */
-}
+  }
 
-/* Dark Theme for Input Group Text (Icons) */
-.input-group-text {
+  /* Dark Theme for Input Group Text (Icons) */
+  .input-group-text {
     background-color: #222 !important;
     color: #fff !important;
     border-color: #555 !important;
-}
-.restaurant-image{
+  }
+  .restaurant-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
-}
-.floating-text {
+  }
+  .floating-text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-}
-/* On Small Screens (less than 768px) */
-@media (max-width: 768px) {
-    .left-column{
-        display: none;
+  }
+  /* On Small Screens (less than 768px) */
+  @media (max-width: 768px) {
+    .left-column {
+      display: none;
     }
-    input[type="button"]{
-        width: 50% !important;
+    input[type="button"] {
+      width: 50% !important;
     }
-}
+  }
 </style>
 {%endblock%}
