@@ -19,7 +19,7 @@ print(f"BASE_DIR: {BASE_DIR}")  # Debugging print
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 # -------------------- Production Settings --------------------
-RENDER = os.environ.get("RENDER").lower() == "true"
+RENDER = os.environ.get("RENDER", "false").lower() == "true"
 # To Handle the local environment and render environment
 if RENDER:
     DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
