@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import CustomUser, UserProfile, MenuItem, Order
+from .models import CustomUser, UserProfile, MenuItem, Order, GuestOrder
 # Register your models here.
 
 @admin.register(CustomUser)
@@ -64,3 +64,10 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('user__email',)
     list_filter = ('status',)
     ordering = ('-order_date',)
+    
+# Register the GuestOrder model
+@admin.register(GuestOrder)
+class GuestOrderAdmin(admin.ModelAdmin):
+    list_display = ("session_id", "item", "quantity", "added_at")
+    search_fields = ("session_id", "item__name")
+    list_filter = ("added_at",)

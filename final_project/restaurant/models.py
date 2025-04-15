@@ -95,3 +95,9 @@ class Order(models.Model):
     
     def __str__(self):
         return f"Order {self.id} - {self.user.username} - {self.status}"
+    
+class GuestOrder(models.Model):
+    session_id = models.CharField(max_length=100)
+    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)

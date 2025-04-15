@@ -1,166 +1,131 @@
-{% extends "base.html" %}
-{% load static %}
-{% block placeholder %}
+{% extends "base.html" %} {% load static %} {% block placeholder %}
 <main class="container">
     <div class="row my-3">
         <h1>Checkout</h1>
     </div>
     <div class="row gap-4 mb-4">
         <div class="col-md-8 border border-3 rounded-5 table-responsive" id="food_order">
+            {% if cart_items|length == 0 %}
+            <div class="alert alert-danger mt-3" role="alert">Your cart is empty!</div>
+            {% else %}
             <table class="table mt-3">
                 <thead>
-                  <tr>
-                    <th scope="col">Food Items</th>
-                    <th scope="col">Quality</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Action</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">Food Items</th>
+                        <th scope="col">Quality</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Action</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                        <span>
-                            <img src="{% static 'image/omelette.jpg' %}" class="rounded float-start table_left_image" alt="Omelette">
-                            <b>Omelette</b>
-                        </span>
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-minus"></i>
+                    {% for order in cart_items %}
+                    <tr>
+                        <td>
+                            <span>
+                                <img src="{{ order.image_url }}" class="rounded float-start table_left_image"
+                                    alt="Omelette" />
+                                <b>{{ order.name }}</b>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-primary">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary">
+                                    {{ order.quantity }}
+                                </button>
+                                <button type="button" class="btn btn-outline-primary">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td><b>${{ order.subtotal }}</b></td>
+                        <td>
+                            <button class="btn btn-danger" type="button">
+                                <i class="fa-solid fa-trash"></i>
                             </button>
-                            <button type="button" class="btn btn-outline-primary">1</button>
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </td>
-                    <td><b>$9.99</b></td>
-                    <td>
-                        <button class="btn btn-danger" type="button">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <span>
-                            <img src="{% static 'image/spaghetti.jpg' %}" class="rounded float-start table_left_image" alt="Spaghetti">
-                            <b>Spaghetti</b>
-                        </span>
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary">1</button>
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </td>
-                    <td><b>$14.99<b></td>
-                    <td>
-                        <button class="btn btn-danger" type="button">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <span>
-                            <img src="{% static 'image/home_burger.jpg' %}" class="rounded float-start table_left_image" alt="Chessburger">
-                            <b>Chessburger</b>
-                        </span>
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary">1</button>
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </td>
-                    <td><b>$14.99</b></td>
-                    <td>
-                        <button class="btn btn-danger" type="button">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <button class="btn btn-dark rounded-pill w-50 mb-3">Update Cart</button>
-        </div>
-        <div class="col-md border border-3 rounded-5">
-            <h3 class="mt-3 ms-3">Order Summary</h3>
-            <span class="d-flex flex-row mx-3 my-3">
-                <input type="text" class="form-control w-75 rounded-pill me-2 border border-3" id="DiscountCode" placeholder="Discount Code">
-                <button class="btn btn-secondary rounded-pill border border-3 w-25">Apply</button>
-            </span>
-            <table class="table mx-auto">
-                <tbody>
-                  <tr>
-                    <td>Subtotal</td>
-                    <td>$39.97</td>
-                  </tr>
-                  <tr>
-                    <td>Discount</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>Delivery Fee</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>Tax</td>
-                    <td>$4</td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <b class="h5">Total</b>
-                    </td>
-                    <td>
-                        <b class="h5">$43.97</b>
-                    </td>
-                  </tr>
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-            <button class="btn btn-dark rounded-pill w-100 mb-3">Checkout Now</button>
+            {% endif %}
+            <button class="btn btn-dark rounded-pill w-50 mb-3">Update Cart</button>
+        </div>
+        
+        <div class="col-md border border-3 rounded-5">
+            <h3 class="mt-3 ms-3">Order Summary</h3>
+            <!-- <span class="d-flex flex-row mx-3 my-3">
+                <input type="text" class="form-control w-75 rounded-pill me-2 border border-3" id="DiscountCode"
+                    placeholder="Discount Code" />
+                <button class="btn btn-secondary rounded-pill border border-3 w-25">
+                    Apply
+                </button>
+            </span> -->
+            <table class="table mx-auto my-auto">
+                <tbody>
+                    <tr>
+                        <td>Subtotal</td>
+                        <td>$ {{ subtotal }}</td>
+                    </tr>
+                    <!-- <tr>
+                        <td>Discount</td>
+                        <td>$ {{ discount }}</td>
+                    </tr> -->
+                    <tr>
+                        <td>Delivery Fee</td>
+                        <td>$ {{ delivery_fee }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tax</td>
+                        <td>$ {{ tax }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b class="h5">Total</b>
+                        </td>
+                        <td>
+                            <b class="h5">${{ total_price }}</b>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-dark rounded-pill w-100 mt-3">Checkout Now</button>
         </div>
     </div>
-    <div class="row">
-        
-    </div>
+    <div class="row"></div>
     <style>
         #food_order {
             min-height: 40vh;
         }
+
         .btn-group {
             border-radius: 95%;
         }
-        .table_left_image
-        {
+
+        .table_left_image {
             width: 5rem;
             height: 5rem;
             margin-right: 1rem;
         }
-        main{
+
+        main {
             min-height: 80vh;
         }
-        body
-        {
+
+        body {
             background-color: #94b4e9;
         }
+
         table {
             border-radius: 15px;
-            overflow: hidden; /* Ensures rounded corners are applied */
-            border-collapse: separate; /* Allows border-radius to be effective */
-            border-spacing: 0; /* Prevents gaps between cells */
+            overflow: hidden;
+            /* Ensures rounded corners are applied */
+            border-collapse: separate;
+            /* Allows border-radius to be effective */
+            border-spacing: 0;
+            /* Prevents gaps between cells */
         }
     </style>
 </main>

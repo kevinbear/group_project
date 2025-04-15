@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout, authenticate, login
+from django.views.decorators.http import require_POST
 from restaurant.forms import SignupForm, LoginForm
 from restaurant.models import CustomUser
-from .models import MenuItem, CustomUser, UserProfile, Order  # Import your model
+from .models import MenuItem, CustomUser, UserProfile, Order, GuestOrder  # Import your model
+import json
+from decimal import Decimal
 # Create your views here
 
 def home(request):
@@ -91,7 +94,38 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 def shopping_cart(request):
-    return render(request, 'shopping_cart.html')
+    session_id = request.session.session_key
+    if not session_id:
+        request.session.create()
+        session_id = request.session.session_key
+    
+    guest_orders = GuestOrder.objects.filter(session_id=session_id)
+    cart_items = []
+    
+    for order in guest_orders:
+        cart_items.append({
+            "item_id": order.item.item_id,
+            "image_url": order.item.image.url if order.item.image else None,
+            "name": order.item.name,
+            "price": order.item.price,
+            "quantity": order.quantity,
+            "subtotal": round(order.item.price * order.quantity, 2)
+        })
+    
+    subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
+    delivery_fee = Decimal("5.00")
+    tax = (subtotal + delivery_fee) * Decimal("0.0775")
+    total_price = tax + subtotal
+    
+    context = {
+        "cart_items": cart_items,
+        "subtotal": subtotal,
+        "discount": 0,
+        "delivery_fee": delivery_fee,
+        "tax": round(tax, 2),
+        "total_price": round(total_price, 2),
+    }
+    return render(request, 'shopping_cart.html', context)
 
 def checkout(request):
     return render(request, 'checkout.html')
@@ -111,3 +145,82 @@ def user_profile(request):
     else:
         messages.error(request, "You need to be logged in to view this page.")
         return redirect('login')
+    
+    
+# Work with session
+# def add_to_cart(request):
+    
+#     if request.method == "POST":
+#         data = json.loads(request.body)
+#         item_id = str(data.get("id"))
+#         item_name = data.get("name")
+#         item_price = data.get("price")
+
+#         cart = request.session.get("cart", {})
+
+#         if item_id in cart:
+#             cart[item_id]["quantity"] += 1
+#         else:
+#             cart[item_id] = {
+#                 "name": item_name,
+#                 "price": item_price,
+#                 "quantity": 1
+#             }
+
+#         request.session["cart"] = cart
+#         return JsonResponse({"status": "ok", "cart": cart})
+    
+@require_POST
+def add_to_cart(request):
+    if not request.session.session_key:
+        request.session.create()
+    session_id = request.session.session_key
+
+    try:
+        # Parse JSON body from fetch
+        data = json.loads(request.body)
+        item_id = data.get("id")
+        quantity = int(data.get("quantity", 1))  # default to 1
+
+        print(f"Received item_id: {item_id}, quantity: {quantity}")
+
+        # Check if item_id is valid
+        if not item_id:
+            return JsonResponse({"error": "Missing item ID"}, status=400)
+
+        item = MenuItem.objects.get(pk=item_id)
+
+        # Check if the item already exists in cart
+        existing_order = GuestOrder.objects.filter(session_id=session_id, item=item).first()
+
+        if existing_order:
+            existing_order.quantity += quantity
+            existing_order.save()
+        else:
+            GuestOrder.objects.create(session_id=session_id, item=item, quantity=quantity)
+
+        return JsonResponse({"success": True, "item": item.name, "quantity": quantity})
+
+    except MenuItem.DoesNotExist:
+        return JsonResponse({"error": "Item does not exist."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+def show_cart(request):
+    if not request.session.session_key:
+        request.session.create()
+    session_id = request.session.session_key
+
+    guest_orders = GuestOrder.objects.filter(session_id=session_id)
+
+    cart_items = []
+    for order in guest_orders:
+        cart_items.append({
+            "item_id": order.item.item_id,
+            "name": order.item.name,
+            "price": order.item.price,
+            "quantity": order.quantity,
+            "subtotal": round(order.item.price * order.quantity, 2)
+        })
+
+    return JsonResponse({"cart": cart_items})
