@@ -65,6 +65,7 @@ class MenuItem(models.Model) :
     item_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True, null=True)  # Optional description field
     category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,  # Apply the choices to the category field

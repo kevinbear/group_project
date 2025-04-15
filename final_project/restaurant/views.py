@@ -26,7 +26,7 @@ def menu(request):
     lunch_items = MenuItem.objects.filter(category='lunch')
     dinner_items = MenuItem.objects.filter(category='dinner')
 
-    return render(request, 'menu.html', {
+    return render(request, 'menu_new.html', {
         'breakfast_items': breakfast_items,
         'lunch_items': lunch_items,
         'dinner_items': dinner_items,

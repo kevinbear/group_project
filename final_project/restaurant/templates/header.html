@@ -168,5 +168,26 @@
         new bootstrap.Tooltip(tooltipTriggerEl);
       });
     });
+
+    // Add the button update functionality
+    $(document).ready(function () {
+      // When "+" button is clicked
+      $('.btn-group .btn-primary:last-child').click(function () {
+        let input = $(this).siblings('input');
+        let currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+          input.val(currentVal + 1);
+        }
+      });
+  
+      // When "-" button is clicked
+      $('.btn-group .btn-primary:first-child').click(function () {
+        let input = $(this).siblings('input');
+        let currentVal = parseInt(input.val());
+        if (!isNaN(currentVal) && currentVal > 0) {
+          input.val(currentVal - 1);
+        }
+      });
+    });
   </script>
 </header>

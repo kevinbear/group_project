@@ -39,13 +39,13 @@ class UserProfileAdmin(admin.ModelAdmin):
 # Register the MenuItem model
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('item_id', 'name', 'price', 'category', 'combo_price', 'image_preview')  # Add image_preview here
+    list_display = ('item_id', 'name', 'price', 'category', 'combo_price', 'image_preview', 'description')  # Add image_preview here
     search_fields = ('name', 'category')
     list_filter = ('category',)
     ordering = ('category', 'name',)
 
     fieldsets = (
-        (None, {'fields': ('name', 'price', 'category', 'combo_price', 'image')}),  # No duplicates
+        (None, {'fields': ('name', 'price', 'category', 'combo_price', 'image', 'description')}),  # No duplicates
     )
     
     def image_preview(self, obj):

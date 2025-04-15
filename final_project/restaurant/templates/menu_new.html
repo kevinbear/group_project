@@ -1,0 +1,277 @@
+{%extends "base.html"%} {%block placeholder%} {% load static %}
+<div class="container">
+  <div class="row text-center pt-3">
+    <h1>Our Menu</h1>
+  </div>
+  <div class="row">
+    <!-- Nav bar -->
+    <ul class="nav nav-tabs pt-3" id="menuTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="breakfast-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#breakfast"
+          type="button"
+          role="tab"
+          aria-controls="breakfast"
+          aria-selected="true"
+        >
+          <i class="fa-solid fa-mug-hot pe-2"></i>
+          Breakfast
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="lunch-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#lunch"
+          type="button"
+          role="tab"
+          aria-controls="lunch"
+          aria-selected="false"
+        >
+          <i class="fa-solid fa-burger pe-2"></i>
+          Lunch
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="dinner-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#dinner"
+          type="button"
+          role="tab"
+          aria-controls="dinner"
+          aria-selected="false"
+        >
+          <i class="fa-solid fa-plate-wheat pe-2"></i>
+          Dinner
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div
+        class="tab-pane active"
+        id="breakfast"
+        role="tabpanel"
+        aria-labelledby="breakfast-tab"
+      >
+        <section class="menu-section mb-4" id="breakfast">
+          <div class="alert alert-primary mt-3" role="alert">
+            All entrees come with a side & bakery item choice of: Hashbrowns,
+            Fresh fruit, Cinnamonroll, Muffin, White, Wheat, Sourdough.
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for item in breakfast_items %}
+
+            <div class="col">
+              <div class="card h-100">
+                <img
+                  src="{{ item.image.url }}"
+                  class="card-img-top"
+                  alt="{{ item.name }}"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.name }}</h5>
+                  {% if item.combo_price %}
+                  <p>Add ${{ item.combo_price }} for combo</p>
+                  {% endif %}
+                  <p class="card-text">
+                    {{ item.description }}
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div
+                    class="btn-group d-flex justify-content-between"
+                    role="group"
+                    aria-label="Button group with nested dropdown"
+                  >
+                    <button type="button" class="btn btn-primary">-</button>
+                    <input type="text" class="text-center" value="0">
+                    <button type="button" class="btn btn-primary">+</button>
+                    
+                  </div>
+                </div>
+                <button type="button" class="btn btn-success mb-2 mx-3"><i class="fas fa-shopping-cart me-2"> Add to cart</i></button>
+              </div>
+            </div>
+            {% empty %}
+            <div class="col">
+              <div class="card h-100">
+                <img
+                  src="{{ item.image.url }}"
+                  class="card-img-top"
+                  alt="{{ item.name }}"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">No breakfast items available.</h5>
+                  <p class="card-text">
+                    ...
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">No breakfast items available.</small>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+      </div>
+      <div
+        class="tab-pane"
+        id="lunch"
+        role="tabpanel"
+        aria-labelledby="lunch-tab"
+      >
+      <section class="menu-section mb-4" id="lunch">
+        <div class="alert alert-primary mt-3" role="alert">
+            All entrees come with a side choice of: Fries, Side salad, or Soup.
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for item in lunch_items %}
+
+          <div class="col">
+            <div class="card h-100">
+              <img
+                src="{{ item.image.url }}"
+                class="card-img-top"
+                alt="{{ item.name }}"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                {% if item.combo_price %}
+                <p>Add ${{ item.combo_price }} for combo</p>
+                {% endif %}
+                <p class="card-text">
+                    {{ item.description }}
+                </p>
+              </div>
+              <div class="card-footer">
+                <div
+                  class="btn-group d-flex justify-content-between"
+                  role="group"
+                  aria-label="Button group with nested dropdown"
+                >
+                  <button type="button" class="btn btn-primary">-</button>
+                  <input type="text" class="text-center" value="0">
+                  <button type="button" class="btn btn-primary">+</button>
+                  
+                </div>
+              </div>
+              <button type="button" class="btn btn-success mb-2 mx-3"><i class="fas fa-shopping-cart me-2"> Add to cart</i></button>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col">
+            <div class="card h-100">
+              <img
+                src="{{ item.image.url }}"
+                class="card-img-top"
+                alt="{{ item.name }}"
+              />
+              <div class="card-body">
+                <h5 class="card-title">No Lunch items available.</h5>
+                <p class="card-text">
+                  ...
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">No Lunch items available.</small>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      </div>
+      <div
+        class="tab-pane"
+        id="dinner"
+        role="tabpanel"
+        aria-labelledby="dinner-tab"
+      >
+      <section class="menu-section mb-4" id="dinner">
+        <div class="alert alert-primary mt-3" role="alert">
+            All entrees come with a side choice of: Fries, Side salad, or Soup.
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for item in dinner_items %}
+
+          <div class="col">
+            <div class="card h-100">
+              <img
+                src="{{ item.image.url }}"
+                class="card-img-top"
+                alt="{{ item.name }}"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                {% if item.combo_price %}
+                <p>Add ${{ item.combo_price }} for combo</p>
+                {% endif %}
+                <p class="card-text">
+                  {{ item.description }}
+                </p>
+              </div>
+              <div class="card-footer">
+                <div
+                  class="btn-group d-flex justify-content-between"
+                  role="group"
+                  aria-label="Button group with nested dropdown"
+                >
+                  <button type="button" class="btn btn-primary">-</button>
+                  <input type="text" class="text-center" value="0">
+                  <button type="button" class="btn btn-primary">+</button>
+                  
+                </div>
+              </div>
+              <button type="button" class="btn btn-success mb-2 mx-3"><i class="fas fa-shopping-cart me-2"> Add to cart</i></button>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col">
+            <div class="card h-100">
+              <img
+                src="{{ item.image.url }}"
+                class="card-img-top"
+                alt="{{ item.name }}"
+              />
+              <div class="card-body">
+                <h5 class="card-title">No dinner items available.</h5>
+                <p class="card-text">
+                  ...
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">No dinner items available.</small>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      </div>
+    </div>
+  </div>
+  <script>
+    var triggerTabList = [].slice.call(document.querySelectorAll("#menuTab a"));
+    triggerTabList.forEach(function (triggerEl) {
+      var tabTrigger = new bootstrap.Tab(triggerEl);
+
+      triggerEl.addEventListener("click", function (event) {
+        event.preventDefault();
+        tabTrigger.show();
+      });
+    });
+  </script>
+</div>
+{%endblock%}
