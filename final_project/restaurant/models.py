@@ -73,28 +73,81 @@ class MenuItem(models.Model) :
     )
     
     image = models.ImageField(upload_to='menu_images/', blank=True, null=True)  # Image field to store product images
+    # image = models.ImageField(upload_to='menu_images/', blank=False, null=False)
     combo_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Optional combo price
     def __str__(self):
         return f"{self.name} - ${self.price} ({self.get_category_display()})"  # This should work
+    
+# class Order(models.Model):
+#     STATUS_CHOICES = [
+#         ('pending', 'Pending'),
+#         ('processing', 'Processing'),
+#         ('completed', 'Completed'),
+#         ('cancelled', 'Cancelled'),
+#     ]
+
+#     order_id = models.AutoField(primary_key=True)
+#     customer = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name="orders")
+#     guest_name = models.CharField(max_length=100, blank=True, null=True)
+#     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name="orders")
+#     quantity = models.PositiveIntegerField()
+#     order_date = models.DateTimeField(auto_now_add=True)
+#     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+#     card_name = models.CharField(max_length=100, blank=True, null=True)
+#     card_last4 = models.CharField(max_length=4, blank=True, null=True)
+#     is_paid = models.BooleanField(default=False)
+#     transaction_id = models.CharField(max_length=100, blank=True, null=True) 
+
+#     # Simplified: no choice, just assume it's a card
+#     is_paid = models.BooleanField(default=False)
+#     transaction_id = models.CharField(max_length=100, blank=True, null=True)
+
+#     def __str__(self):
+#         # Safely access customer email or fallback to guest_name
+#         return self.customer.email if self.customer else self.guest_name or "Guest"
 
 class Order(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('processing', 'Processing'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
-    ]
-    
     order_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="orders")
-    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name="orders")
     quantity = models.PositiveIntegerField()
-    order_date = models.DateTimeField(auto_now_add=True) # Automatically set the date when the order is created
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) # Total price of the order
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')  # Order status
+    order_date = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('completed', 'Completed')], default='pending')
+    # item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    is_paid = models.BooleanField(default=False)
+    transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    card_last4 = models.CharField(max_length=4, null=True, blank=True)
+    card_name = models.CharField(max_length=100, null=True, blank=True)
+    guest_name = models.CharField(max_length=100, null=True, blank=True)
+    customer = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
+
+    ## Explicitly set the primary key field name if it's not named 'id'
+    # class Meta:
+    #     db_table = 'restaurant_order'  # Ensure it matches your table name
     
     def __str__(self):
-        return f"Order {self.id} - {self.user.username} - {self.status}"
+        return f"Order {self.order_id} by {self.customer.email}"
+
+# class Order(models.Model):
+#     guest_name = models.CharField(max_length=255)
+#     card_name = models.CharField(max_length=255)
+#     card_last4 = models.CharField(max_length=4)
+#     order_id = models.CharField(max_length=20, unique=True)
+#     customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('completed', 'Completed')], default='pending')
+#     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+#     order_date = models.DateTimeField(auto_now_add=True)
+#     is_paid = models.BooleanField(default=False)
+#     transaction_id = models.CharField(max_length=255, blank=True, null=True)  # Optional for payment systems
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=255)
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.item_name}"
     
 class GuestOrder(models.Model):
     session_id = models.CharField(max_length=100)

@@ -45,40 +45,28 @@
     <div class="row r2 py-5">
         <div class="col-md">
             <div class="d-flex flex-wrap justify-content-around">
+                {% for item in random_items %}
                 <div class="card" style="width: 18rem;">
-                    <img src="{% static 'image/lobster.jpg' %}" class="card-img-top" alt="lobster">
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
                     <div class="card-body">
-                        <h5 class="card-title">Lobster</h5>
-                        <p class="card-text">Savor the rich, buttery taste of fresh lobster, perfectly steamed and served with a side of garlic butter and lemon.</p>
-                        <a href="#" class="btn btn-primary">Add to cart</a>
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">{{ item.description }}</p>
+                        <div
+                            class="btn-group d-flex justify-content-between"
+                            role="group"
+                            aria-label="Button group with nested dropdown"
+                        >
+                            <button type="button" class="btn btn-primary">-</button>
+                            <input type="number" class="text-center" value="1" min="1">
+                            <button type="button" class="btn btn-primary">+</button>
+                        </div>
+                        <button class="btn btn-primary add-to-cart mt-2" 
+                        data-id="{{ item.item_id }}" 
+                        data-name="{{ item.name }}" 
+                        data-price="{{ item.price }}">Add to cart</button>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;">
-                    <img src="{% static 'image/alfredo.jpg' %}" class="card-img-top" alt="alfredo">
-                    <div class="card-body">
-                        <h5 class="card-title">Chicken Alfredo</h5>
-                        <p class="card-text">Creamy Alfredo sauce tossed with tender grilled chicken and fettuccine, finished with parmesan and fresh parsley.</p>
-                        <a href="#" class="btn btn-primary">Add to cart</a>
-                    </div>
-                </div>
-                <div class="card" style="width: 18rem;">
-                    <img src="{% static 'image/nysteak.jpg' %}" class="card-img-top" alt="nysteak">
-                    <div class="card-body">
-                        <h5 class="card-title">New York Strip Steak</h5>
-                        <p class="card-text">
-                            A tender, juicy New York strip steak, grilled to perfection and topped with garlic herb butter, served with roasted vegetables.
-                        </p>
-                        <a href="#" class="btn btn-primary">Add to cart</a>
-                    </div>
-                </div>
-                <div class="card" style="width: 18rem;">
-                    <img src="{% static 'image/spaghetti.jpg' %}" class="card-img-top" alt="spaghetti">
-                    <div class="card-body">
-                        <h5 class="card-title">Spaghetti Marinara</h5>
-                        <p class="card-text">Classic spaghetti pasta tossed in a rich tomato marinara sauce, topped with fresh basil and grated parmesan.</p>
-                        <a href="#" class="btn btn-primary">Add to cart</a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -111,6 +99,40 @@
         setTimeout(function() {
             map.invalidateSize();
         }, 500);
+    </script>
+    <script>
+        const csrftoken = '{{ csrf_token }}';
+    
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                const itemId = this.dataset.id;
+                const itemName = this.dataset.name;
+                const itemPrice = this.dataset.price;
+    
+                // Find the sibling input field and get its value
+                const quantityInput = this.closest(".card").querySelector("input[type='number']");
+                const quantity = parseInt(quantityInput.value) || 1;
+    
+                fetch("{% url 'add_to_cart' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken
+                    },
+                    body: JSON.stringify({
+                        id: itemId,
+                        quantity: quantity,
+                        name: itemName,
+                        price: itemPrice
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert("Item added to cart!");
+                    console.log("Cart:", data.cart); // For testing
+                });
+            });
+        });
     </script>
 </main>
 <style>

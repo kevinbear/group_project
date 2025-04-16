@@ -61,7 +61,7 @@
         role="tabpanel"
         aria-labelledby="breakfast-tab"
       >
-        <section class="menu-section mb-4" id="breakfast">
+        <section class="menu-section mb-4">
           <div class="alert alert-primary mt-3" role="alert">
             All entrees come with a side & bakery item choice of: Hashbrowns,
             Fresh fruit, Cinnamonroll, Muffin, White, Wheat, Sourdough.
@@ -85,6 +85,7 @@
                   <p class="card-text">
                     {{ item.description }}
                   </p>
+                  <p>Price: $ {{ item.price }}</p>
                 </div>
                 <div class="card-footer">
                   <div
@@ -93,9 +94,8 @@
                     aria-label="Button group with nested dropdown"
                   >
                     <button type="button" class="btn btn-primary">-</button>
-                    <input type="text" class="text-center" value="0">
+                    <input type="number" class="text-center" value="1" min="1">
                     <button type="button" class="btn btn-primary">+</button>
-                    
                   </div>
                 </div>
                 <button class="btn btn-success mb-2 mx-3 add-to-cart" data-id="{{ item.item_id }}" data-name="{{ item.name }}" data-price="{{ item.price }}">
@@ -108,9 +108,9 @@
             <div class="col">
               <div class="card h-100">
                 <img
-                  src="{{ item.image.url }}"
+                  src=""
                   class="card-img-top"
-                  alt="{{ item.name }}"
+                  alt=""
                 />
                 <div class="card-body">
                   <h5 class="card-title">No breakfast items available.</h5>
@@ -156,6 +156,7 @@
                 <p class="card-text">
                     {{ item.description }}
                 </p>
+                <p>Price: $ {{ item.price }}</p>
               </div>
               <div class="card-footer">
                 <div
@@ -164,7 +165,7 @@
                   aria-label="Button group with nested dropdown"
                 >
                   <button type="button" class="btn btn-primary">-</button>
-                  <input type="text" class="text-center" value="0">
+                  <input type="number" class="text-center" value="1" min="1">
                   <button type="button" class="btn btn-primary">+</button>
                   
                 </div>
@@ -178,9 +179,9 @@
           <div class="col">
             <div class="card h-100">
               <img
-                src="{{ item.image.url }}"
+                src=""
                 class="card-img-top"
-                alt="{{ item.name }}"
+                alt=""
               />
               <div class="card-body">
                 <h5 class="card-title">No Lunch items available.</h5>
@@ -226,6 +227,7 @@
                 <p class="card-text">
                   {{ item.description }}
                 </p>
+                <p>Price: $ {{ item.price }}</p>
               </div>
               <div class="card-footer">
                 <div
@@ -234,7 +236,7 @@
                   aria-label="Button group with nested dropdown"
                 >
                   <button type="button" class="btn btn-primary">-</button>
-                  <input type="text" class="text-center" value="0">
+                  <input type="number" class="text-center" value="1" min="1">
                   <button type="button" class="btn btn-primary">+</button>
                   
                 </div>
@@ -248,9 +250,9 @@
           <div class="col">
             <div class="card h-100">
               <img
-                src="{{ item.image.url }}"
+                src=""
                 class="card-img-top"
-                alt="{{ item.name }}"
+                alt=""
               />
               <div class="card-body">
                 <h5 class="card-title">No dinner items available.</h5>
@@ -290,7 +292,7 @@
         const itemPrice = this.dataset.price;
 
         // Find the sibling input field and get its value
-        const quantityInput = this.closest(".card").querySelector("input[type='text']");
+        const quantityInput = this.closest(".card").querySelector("input[type='number']");
         const quantity = parseInt(quantityInput.value) || 1;
 
         fetch("{% url 'add_to_cart' %}", {
@@ -312,6 +314,19 @@
           console.log("Cart:", data.cart); // For testing
         });
       });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hash = window.location.hash;
+  
+      if (hash) {
+        const targetTabButton = document.querySelector(`button[data-bs-target="${hash}"]`);
+        if (targetTabButton) {
+          const tab = new bootstrap.Tab(targetTabButton);
+          tab.show();
+        }
+      }
     });
   </script>
 </div>

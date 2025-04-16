@@ -29,3 +29,20 @@ class LoginForm(forms.Form):
         except CustomUser.DoesNotExist:
             raise forms.ValidationError("Email does not exist.")
         return email
+
+class PaymentForm(forms.Form):
+    card_number = forms.CharField(max_length=19, label="Card Number")
+    card_name = forms.CharField(max_length=100, label="Name on Card")
+    expiry_date = forms.CharField(max_length=5, label="Expiry Date")
+
+    def clean_card_number(self):
+        data = self.cleaned_data['card_number'].replace(" ", "")
+        if not data.isdigit() or len(data) != 16:
+            raise forms.ValidationError("Card number must be 16 digits.")
+        return data
+
+    def clean_expiry_date(self):
+        data = self.cleaned_data['expiry_date']
+        if not data or len(data) != 5 or '/' not in data:
+            raise forms.ValidationError("Expiry must be in MM/YY format.")
+        return data

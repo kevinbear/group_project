@@ -1,132 +1,395 @@
 {% extends "base.html" %} {% load static %} {% block placeholder %}
 <main class="container">
-    <div class="row my-3">
-        <h1>Checkout</h1>
+  <div class="row my-3">
+    <h1>Checkout</h1>
+  </div>
+  <div class="row gap-4 mb-4">
+    <div
+      class="col-md-8 border border-3 rounded-5 table-responsive"
+      id="food_order"
+    >
+      {% if cart_items|length == 0 %}
+      <div class="alert alert-danger mt-3 text-center" role="alert">
+        Your cart is empty!
+      </div>
+      {% else %}
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Food Items</th>
+            <th scope="col">Quality</th>
+            <th scope="col">Total</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in cart_items %}
+          <tr data-item-id="{{ order.item_id }}">
+            <td>
+              <span>
+                <img
+                  src="{{ order.image_url }}"
+                  class="rounded float-start table_left_image"
+                  alt="{{ order.name }}"
+                />
+                <b>{{ order.name }}</b>
+              </span>
+            </td>
+            <td>
+              <div
+                class="btn-group quantity-group"
+                role="group"
+                aria-label="Basic outlined example"
+                data-item-id="{{ order.item_id }}"
+              >
+                <input
+                  type="number"
+                  class="btn btn-outline-primary qty-input"
+                  value="{{ order.quantity }}"
+                  min="1"
+                />
+              </div>
+            </td>
+            <td>
+              <b class="item-subtotal" data-subtotal-for="{{ order.item_id }}"
+                >${{ order.subtotal }}</b
+              >
+            </td>
+            <td>
+              <button
+                class="btn btn-danger delete-btn"
+                type="button"
+                data-item-id="{{ order.item_id }}"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
     </div>
-    <div class="row gap-4 mb-4">
-        <div class="col-md-8 border border-3 rounded-5 table-responsive" id="food_order">
-            {% if cart_items|length == 0 %}
-            <div class="alert alert-danger mt-3" role="alert">Your cart is empty!</div>
-            {% else %}
-            <table class="table mt-3">
-                <thead>
-                    <tr>
-                        <th scope="col">Food Items</th>
-                        <th scope="col">Quality</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in cart_items %}
-                    <tr>
-                        <td>
-                            <span>
-                                <img src="{{ order.image_url }}" class="rounded float-start table_left_image"
-                                    alt="Omelette" />
-                                <b>{{ order.name }}</b>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button type="button" class="btn btn-outline-primary">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-primary">
-                                    {{ order.quantity }}
-                                </button>
-                                <button type="button" class="btn btn-outline-primary">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <td><b>${{ order.subtotal }}</b></td>
-                        <td>
-                            <button class="btn btn-danger" type="button">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% endif %}
-            <button class="btn btn-dark rounded-pill w-50 mb-3">Update Cart</button>
+
+    <div class="col-md border border-3 rounded-5">
+      <h3 class="mt-3 ms-3">Order Summary</h3>
+      <table class="table mx-auto my-auto">
+        <tbody>
+          <tr>
+            <td>Subtotal</td>
+            <td id="subtotal">$ {{ subtotal }}</td>
+          </tr>
+          <tr>
+            <td>Delivery Fee</td>
+            <td id="delivery-fee">$ {{ delivery_fee }}</td>
+          </tr>
+          <tr>
+            <td>Tax</td>
+            <td id="tax">$ {{ tax }}</td>
+          </tr>
+          <tr>
+            <td>
+              <b class="h5">Total</b>
+            </td>
+            <td>
+              <b class="h5" id="total-price">${{ total_price }}</b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        type="button"
+        class="btn btn-dark rounded-pill w-100 mt-3"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        id="checkout-btn"
+      >
+        Checkout Now
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Confirm Your Order
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Please review your order details before proceeding.</p>
+              <ul>
+                <li><strong>Subtotal:</strong> ${{ subtotal }}</li>
+                <li><strong>Delivery Fee:</strong> ${{ delivery_fee }}</li>
+                <li><strong>Tax:</strong> ${{ tax }}</li>
+                <li><strong>Total:</strong> ${{ total_price }}</li>
+              </ul>
+              <form action="{% url 'shopping_cart' %}" method="POST" id="checkoutForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="cardNumber" class="form-label">Card Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cardNumber"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="19"
+                    name="card_number"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="cardName" class="form-label">Name on Card</label>
+                  <input type="text" class="form-control" id="cardName" name="card_name" />
+                </div>
+                <div class="mb-3">
+                  <label for="expiryDate" class="form-label">Expiry Date</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="expiryDate"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    name="expiry_date"
+                  />
+                </div>
+                <script>
+                    const cardInput = document.getElementById("cardNumber");
+                  
+                    cardInput.addEventListener("input", function (e) {
+                      let value = e.target.value.replace(/\D/g, ""); // Remove all non-digits
+                      value = value.substring(0, 16); // Limit to 16 digits
+                      const groups = value.match(/.{1,4}/g); // Match groups of 1–4 digits
+                      e.target.value = groups ? groups.join(" ") : "";
+                    });
+
+                    const expiryInput = document.getElementById("expiryDate");
+                    expiryInput.addEventListener("input", function (e) {
+                      let value = e.target.value.replace(/\D/g, ""); // Remove all non-digits
+                      value = value.substring(0, 4); // Limit to 4 digits
+                      const groups = value.match(/.{1,2}/g); // Match groups of 1–2 digits
+                      e.target.value = groups ? groups.join("/") : "";
+                    });
+                  </script>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary" onclick="submitCheckoutForm()">
+                Confirm Order
+              </button>
+            </div>
+          </div>
         </div>
-        
-        <div class="col-md border border-3 rounded-5">
-            <h3 class="mt-3 ms-3">Order Summary</h3>
-            <!-- <span class="d-flex flex-row mx-3 my-3">
-                <input type="text" class="form-control w-75 rounded-pill me-2 border border-3" id="DiscountCode"
-                    placeholder="Discount Code" />
-                <button class="btn btn-secondary rounded-pill border border-3 w-25">
-                    Apply
-                </button>
-            </span> -->
-            <table class="table mx-auto my-auto">
-                <tbody>
-                    <tr>
-                        <td>Subtotal</td>
-                        <td>$ {{ subtotal }}</td>
-                    </tr>
-                    <!-- <tr>
-                        <td>Discount</td>
-                        <td>$ {{ discount }}</td>
-                    </tr> -->
-                    <tr>
-                        <td>Delivery Fee</td>
-                        <td>$ {{ delivery_fee }}</td>
-                    </tr>
-                    <tr>
-                        <td>Tax</td>
-                        <td>$ {{ tax }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b class="h5">Total</b>
-                        </td>
-                        <td>
-                            <b class="h5">${{ total_price }}</b>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn btn-dark rounded-pill w-100 mt-3">Checkout Now</button>
-        </div>
+      </div>
     </div>
-    <div class="row"></div>
-    <style>
-        #food_order {
-            min-height: 40vh;
-        }
+  </div>
 
-        .btn-group {
-            border-radius: 95%;
+  <script>
+    // CSRF Helper
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+          cookie = cookie.trim();
+          if (cookie.startsWith(name + "=")) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
         }
+      }
+      return cookieValue;
+    }
 
-        .table_left_image {
-            width: 5rem;
-            height: 5rem;
-            margin-right: 1rem;
-        }
+    function fetchCartData() {
+        fetch("{% url 'get_cart_data' %}")
+        .then((res) => res.json())
+        .then((data) => {
+        console.log("Fetched cart data:", data);
+        updateCartDOMWithFullData(data);
+        })
+        .catch((err) => console.error("Error fetching cart:", err));
+    }
 
-        main {
-            min-height: 80vh;
+    function updateCartDOMWithFullData(data) {
+        if (data.items.length == 0) {
+            document.querySelector("#food_order").innerHTML = `
+                <div class="alert alert-danger mt-3 text-center" role="alert">
+                    Your cart is empty!
+                </div>
+            `;
+            noitem();
+            return;
         }
+        // Get the data from json and reassign to local variables
+        items = data.items;
+        const subtotal = data.subtotal;
+        const delivery_fee = data.delivery_fee;
+        const tax = data.tax;
+        const total = data.total;
+        document.querySelector("#subtotal").textContent = "$" + parseFloat(subtotal).toFixed(2);
+        document.querySelector("#delivery-fee").textContent = "$" + parseFloat(delivery_fee).toFixed(2);
+        document.querySelector("#tax").textContent = "$" + parseFloat(tax).toFixed(2);
+        document.querySelector("#total-price").textContent = "$" + parseFloat(total).toFixed(2);
+        // Update text into our table
+        items.forEach((item)=>{
+            const id = item.id;
+            const subtotal = item.subtotal;
+            item_tr = document.querySelector(`tr[data-item-id="${id}"]`);
+            item_tr.querySelector(".item-subtotal").textContent = "$" + parseFloat(subtotal).toFixed(2);
+            console.log(item_tr);
+        });    
+    }
 
-        body {
-            background-color: #94b4e9;
+    function noitem(){
+        const text = document.querySelector("#food_order").textContent.trim();
+        if (text == "Your cart is empty!") {
+            document.querySelector("#checkout-btn").setAttribute("disabled", true);
+            document.querySelector("#subtotal").textContent = "$ 0.00";
+            document.querySelector("#delivery-fee").textContent = "$ 0.00";
+            document.querySelector("#tax").textContent = "$ 0.00";
+            document.querySelector("#total-price").textContent = "$ 0.00";
+            console.log("Checkout button disabled");
+        } else {
+            document.querySelector("#checkout-btn").removeAttribute("disabled");
         }
+    }
+    
+    function submitCheckoutForm() {
+        const form = document.getElementById("checkoutForm");
+        if (form) {
+          form.submit();
+        }
+    }
+    
+    // Quantity Update Handler
+    function sendUpdate(itemId, newQty) {
+      console.log("Sending update:", itemId, newQty);
+      fetch("{% url 'update_cart' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ id: itemId, quantity: newQty }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Updated:", data);
+          fetchCartData();
+        })
+        .catch((err) => console.error("Update error:", err));
+    }
 
-        table {
-            border-radius: 15px;
-            overflow: hidden;
-            /* Ensures rounded corners are applied */
-            border-collapse: separate;
-            /* Allows border-radius to be effective */
-            border-spacing: 0;
-            /* Prevents gaps between cells */
-        }
-    </style>
+    // Rebind Quantity Inputs
+    function bindQuantityEvents() {
+      document.querySelectorAll(".quantity-group").forEach((group) => {
+        const input = group.querySelector(".qty-input");
+        const itemId = group.dataset.itemId;
+
+        input.addEventListener("change", () => {
+          const val = parseInt(input.value);
+          if (val >= 1) {
+            sendUpdate(itemId, val);
+          } else {
+            input.value = 1;
+            sendUpdate(itemId, 1);
+          }
+        });
+      });
+    }
+
+    // Delete Button Handler
+    function bindDeleteButtons() {
+      document.querySelectorAll(".delete-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          const itemId = button.dataset.itemId;
+          console.log("Deleting item with ID:", itemId);
+          fetch("{% url 'delete_cart_item' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({ id: itemId }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                // Remove row from DOM
+                const row = document.querySelector(
+                  `tr[data-item-id="${itemId}"]`
+                );
+                if (row) row.remove();
+                fetchCartData();
+
+              } else {
+                console.error("Delete failed:", data.error);
+              }
+            })
+            .catch((err) => console.error("Error deleting item:", err));
+        });
+      });
+    }
+
+    // Init
+    document.addEventListener("DOMContentLoaded", () => {
+      bindQuantityEvents();
+      bindDeleteButtons();
+      noitem();
+    });
+  </script>
+
+  <style>
+    #food_order {
+      min-height: 40vh;
+    }
+
+    .btn-group {
+      border-radius: 95%;
+    }
+
+    .table_left_image {
+      width: 5rem;
+      height: 5rem;
+      margin-right: 1rem;
+    }
+
+    main {
+      min-height: 80vh;
+    }
+
+    body {
+      background-color: #94b4e9;
+    }
+
+    table {
+      border-radius: 15px;
+      overflow: hidden;
+      /* Ensures rounded corners are applied */
+      border-collapse: separate;
+      /* Allows border-radius to be effective */
+      border-spacing: 0;
+      /* Prevents gaps between cells */
+    }
+  </style>
 </main>
 {% endblock %}

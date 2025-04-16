@@ -3,18 +3,21 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout, authenticate, login
 from django.views.decorators.http import require_POST
-from restaurant.forms import SignupForm, LoginForm
+from restaurant.forms import SignupForm, LoginForm, PaymentForm
 from restaurant.models import CustomUser
 from .models import MenuItem, CustomUser, UserProfile, Order, GuestOrder  # Import your model
-import json
 from decimal import Decimal
-# Create your views here
+import random, secrets, string, json
+from collections import defaultdict
 
+# Create your views here
 def home(request):
-    context = {}  # Create an empty context dictionary
+    context = {}
+
+    # Check if the user is authenticated
     if request.user.is_authenticated:
         user = request.user
-        messages.info(request, f"Welcome back, {user.first_name}!")  # Use first_name for a more personal touch
+        messages.info(request, f"Welcome back, {user.first_name}!")  # Personalized greeting
         if hasattr(user, 'role'):  # Ensure 'role' exists
             context['user'] = user
             context['role'] = user.role
@@ -22,13 +25,17 @@ def home(request):
             if user.role == 'manager':  # Correct spelling
                 context['admin'] = user  # Keeping your logic
 
+    # Fetch four random items from the menu
+    random_items = random.sample(list(MenuItem.objects.all()), 4)  # Get 4 random items
+    context['random_items'] = random_items
+
     return render(request, 'home.html', context)
 
 def menu(request):
     breakfast_items = MenuItem.objects.filter(category='breakfast')
     lunch_items = MenuItem.objects.filter(category='lunch')
     dinner_items = MenuItem.objects.filter(category='dinner')
-
+    
     return render(request, 'menu_new.html', {
         'breakfast_items': breakfast_items,
         'lunch_items': lunch_items,
@@ -38,8 +45,8 @@ def menu(request):
 def about(request):
     return render(request, 'about.html')
 
-def ordering(request):
-    return render(request, 'ordering.html')
+# def ordering(request):
+#     return render(request, 'ordering.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -93,15 +100,49 @@ def signup(request):
 
     return render(request, 'signup.html', {'form': form})
 
+# def shopping_cart(request):
+#     session_id = request.session.session_key
+#     if not session_id:
+#         request.session.create()
+#         session_id = request.session.session_key
+    
+#     guest_orders = GuestOrder.objects.filter(session_id=session_id)
+#     cart_items = []
+    
+#     for order in guest_orders:
+#         cart_items.append({
+#             "item_id": order.item.item_id,
+#             "image_url": order.item.image.url if order.item.image else None,
+#             "name": order.item.name,
+#             "price": order.item.price,
+#             "quantity": order.quantity,
+#             "subtotal": round(order.item.price * order.quantity, 2)
+#         })
+    
+#     subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
+#     delivery_fee = Decimal("5.00")
+#     tax = (subtotal + delivery_fee) * Decimal("0.0775")
+#     total_price = tax + subtotal
+    
+#     context = {
+#         "cart_items": cart_items,
+#         "subtotal": subtotal,
+#         "discount": 0,
+#         "delivery_fee": delivery_fee,
+#         "tax": round(tax, 2),
+#         "total_price": round(total_price, 2),
+#     }
+#     return render(request, 'shopping_cart.html', context)
+
 def shopping_cart(request):
     session_id = request.session.session_key
     if not session_id:
         request.session.create()
         session_id = request.session.session_key
-    
+
     guest_orders = GuestOrder.objects.filter(session_id=session_id)
     cart_items = []
-    
+
     for order in guest_orders:
         cart_items.append({
             "item_id": order.item.item_id,
@@ -111,12 +152,52 @@ def shopping_cart(request):
             "quantity": order.quantity,
             "subtotal": round(order.item.price * order.quantity, 2)
         })
-    
+
     subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
     delivery_fee = Decimal("5.00")
     tax = (subtotal + delivery_fee) * Decimal("0.0775")
     total_price = tax + subtotal
-    
+
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            card_number = form.cleaned_data['card_number'].replace(" ", "")
+            card_last4 = card_number[-4:]
+            card_name = form.cleaned_data['card_name']
+
+            user = request.user if request.user.is_authenticated else None
+            
+            def generate_transaction_id(length=16):
+                characters = string.ascii_letters + string.digits  # a-z, A-Z, 0-9
+                return ''.join(secrets.choice(characters) for i in range(length))
+
+            # Create the Order first
+            order = Order.objects.create(
+                customer=user,
+                guest_name=card_name if not user else None,
+                total_price=total_price,
+                card_name=card_name,
+                card_last4=card_last4,
+                is_paid=True,
+                transaction_id=generate_transaction_id(),
+                status="processing"
+            )
+
+            # Create OrderItems related to the Order
+            for item in guest_orders:
+                OrderItem.objects.create(
+                    order=order,
+                    item=item.item,
+                    quantity=item.quantity,
+                    total_price=item.item.price * item.quantity
+                )
+
+            # Delete the GuestOrders after creating OrderItems
+            guest_orders.delete()
+            return redirect('order_success')
+    else:
+        form = PaymentForm()
+
     context = {
         "cart_items": cart_items,
         "subtotal": subtotal,
@@ -124,11 +205,21 @@ def shopping_cart(request):
         "delivery_fee": delivery_fee,
         "tax": round(tax, 2),
         "total_price": round(total_price, 2),
+        "form": form,
     }
     return render(request, 'shopping_cart.html', context)
 
-def checkout(request):
-    return render(request, 'checkout.html')
+# def checkout(request):
+    
+
+def order_success(request):
+    # Optional: show last 4 digits of the card (if you stored it)
+    last4 = request.session.pop('last4', None)
+
+    return render(request, 'order_success.html', {
+        'last4': last4
+    })
+    
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
@@ -147,29 +238,8 @@ def user_profile(request):
         return redirect('login')
     
     
-# Work with session
-# def add_to_cart(request):
-    
-#     if request.method == "POST":
-#         data = json.loads(request.body)
-#         item_id = str(data.get("id"))
-#         item_name = data.get("name")
-#         item_price = data.get("price")
 
-#         cart = request.session.get("cart", {})
-
-#         if item_id in cart:
-#             cart[item_id]["quantity"] += 1
-#         else:
-#             cart[item_id] = {
-#                 "name": item_name,
-#                 "price": item_price,
-#                 "quantity": 1
-#             }
-
-#         request.session["cart"] = cart
-#         return JsonResponse({"status": "ok", "cart": cart})
-    
+# Work in session
 @require_POST
 def add_to_cart(request):
     if not request.session.session_key:
@@ -205,7 +275,58 @@ def add_to_cart(request):
         return JsonResponse({"error": "Item does not exist."}, status=404)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-    
+
+@require_POST
+def update_cart(request):
+    try:
+        data = json.loads(request.body)
+        item_id = data.get("id")
+        quantity = int(data.get("quantity", 1))
+        session_id = request.session.session_key or request.session.create()
+
+        item = MenuItem.objects.get(pk=item_id)
+        order = GuestOrder.objects.get(session_id=request.session.session_key, item=item)
+
+        order.quantity = quantity
+        order.save()
+
+        return JsonResponse({"success": True, "updated_quantity": order.quantity})
+
+    except MenuItem.DoesNotExist:
+        return JsonResponse({"error": "Item does not exist"}, status=404)
+    except GuestOrder.DoesNotExist:
+        return JsonResponse({"error": "Order not found"}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@require_POST
+def delete_cart_item(request):
+    try:
+        if not request.session.session_key:
+            return JsonResponse({"error": "Session not found"}, status=400)
+
+        data = json.loads(request.body)
+        item_id = data.get("id")
+
+        if not item_id:
+            return JsonResponse({"error": "Missing item ID"}, status=400)
+
+        item = MenuItem.objects.get(pk=item_id)
+
+        # Only delete the GuestOrder for this session and item
+        order = GuestOrder.objects.get(session_id=request.session.session_key, item=item)
+        order.delete()
+
+        return JsonResponse({"success": True, "message": "Item removed from cart"})
+
+    except GuestOrder.DoesNotExist:
+        return JsonResponse({"error": "Item not in cart"}, status=404)
+    except MenuItem.DoesNotExist:
+        return JsonResponse({"error": "Item does not exist"}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+# Debug test
 def show_cart(request):
     if not request.session.session_key:
         request.session.create()
@@ -224,3 +345,44 @@ def show_cart(request):
         })
 
     return JsonResponse({"cart": cart_items})
+
+def get_cart_data(request):
+    if not request.session.session_key:
+        return JsonResponse({"error": "Session not found"}, status=400)
+
+    session_id = request.session.session_key
+    cart_items = GuestOrder.objects.filter(session_id=session_id)
+
+    # Group by item_id
+    grouped = defaultdict(lambda: {"quantity": 0, "name": "", "image_url": "", "price": 0})
+    for order in cart_items:
+        item_id = order.item.item_id
+        grouped[item_id]["quantity"] += order.quantity
+        grouped[item_id]["name"] = order.item.name
+        grouped[item_id]["image_url"] = order.item.image.url
+        grouped[item_id]["price"] = order.item.price
+
+    data = []
+    subtotal = 0
+
+    for item_id, info in grouped.items():
+        item_total = info["quantity"] * info["price"]
+        subtotal += item_total
+        data.append({
+            "id": item_id,
+            "name": info["name"],
+            "quantity": info["quantity"],
+            "subtotal": item_total,
+            "image_url": info["image_url"],
+        })
+    delivery_fee = Decimal("5.00")
+    tax_rate = Decimal("0.0775")
+    tax = (subtotal + delivery_fee) * tax_rate
+    total = tax + subtotal + delivery_fee
+    return JsonResponse({
+        "items": data,
+        "subtotal": subtotal,
+        "delivery_fee": delivery_fee,
+        "tax": round(tax , 2),
+        "total": round(total, 2)
+    })
