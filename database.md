@@ -110,3 +110,30 @@ All images in `/static/image/lunch`, but still need manual upload to the admin p
 + Apple Walnut Salad - $11.99
 ---
 All images in `/static/image/dinner`, but still need manual upload to the admin panel > Menu items
+
+# Backup working sqlite database
+1. Order Table have majority issue right now
+2. I need to backup all data before I delete other table
+3. Backup working database
+```bash
+python manage.py dumpdata restaurant.MenuItem --indent 2 > menuitem_backup.json
+python manage.py dumpdata restaurant.GuestOrder --indent 2 > guestorder_backup.json
+python manage.py dumpdata restaurant.CustomUser --indent 2 > customuser_backup.json
+python manage.py dumpdata restaurant.UserProfile --indent 2 > userprofile_backup.json
+```
+4. Reset the database
+```bash
+rm db.sqlite3
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+python manage.py makemigrations
+python manage.py migrate
+```
+5. Restore backed up data
+```bash
+python manage.py loaddata menuitem_backup.json
+python manage.py loaddata guestorder_backup.json
+python manage.py loaddata customuser_backup.json
+python manage.py loaddata userprofile_backup.json
+``` 

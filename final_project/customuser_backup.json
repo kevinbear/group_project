@@ -1,0 +1,362 @@
+[
+{
+  "model": "restaurant.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$XtWqXXdbg9MQpsNxpj3qyW$jYqKahJKBwYbV/BD+s0GVj4wNi5jwL4kd0PRoRwwjOk=",
+    "last_login": "2025-04-16T04:13:13Z",
+    "is_superuser": true,
+    "first_name": "Kevin",
+    "last_name": "Kuo",
+    "email": "kuo_yin_bo@csu.fullerton.edu",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:07:06Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$eAT9x1tGojhqeViPXeA6mg$pYIVuo3nL3Z7tJ6bq4qDQIRMgA1g2h5htLuLgwPS8h8=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "AKASH",
+    "last_name": "SATISH",
+    "email": "akashys@csu.fullerton.edu",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:19:37Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$4KYFQV5Irx91FFvDFJoWF7$ZUuR9K1dRPbgUZqbPd4aF0URcMTUm0j8jw35ZDmbHGk=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "Erin",
+    "last_name": "Vallejo",
+    "email": "ehvallejo@csu.fullerton.edu",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:21:39Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$AwBBFQe9VmzShuQmFutpOr$6pnBreEgX47TfU4cNgv7DSRCr5mHPfViFgO9RSKdO2I=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "Hannah",
+    "last_name": "Nguyen",
+    "email": "hnguyen1058@csu.fullerton.edu",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:23:05.367Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$nDUbZBEi00yEooEhWUK53t$LmUwCdQpjla29aWZtGlVUPm8o22XhDYdGwDICUW0Rl4=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "Mohammad",
+    "last_name": "Khan",
+    "email": "siddique.khan@csu.fullerton.edu",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:24:00.619Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$SzyiPnNWI4MZLWxGULT8uB$AME7Ad8yG8/CzEjZ3uL7KXcrZNjEQiktUW9HVj/1ycE=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "email": "joshua35@example.org",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:28:12.725Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$C9JrkrxHM8gm6VaEalJGsg$PktNMN9y96Lm2lJYIBpLrVs1RthcI9hpo8NscefkONw=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "email": "jack47@example.com",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:28:12.954Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$pjDN3j9UfSQQeNrnLRik63$dALdF8I26Hrk9brcvFc8Y1EAMAFElvl8SOQ9UG5Dfvw=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "email": "christophershelton@example.com",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:28:13.171Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Ig3ZubjjnRdSxmwCYEioB8$pdKWmTJTBjDCVxWZLSdHDjDWmrlh7cdqhXrZ9qfjYoo=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "email": "cadams@example.org",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:28:13.390Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$qeqQZFBN4dDhBrsoC7aRCN$+gmnCG3wWq2aDaSzi2glcD5r+SYuPVJBOeLzqfpL5y0=",
+    "last_login": null,
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "email": "rebecca83@example.com",
+    "role": "manager",
+    "is_active": true,
+    "is_staff": true,
+    "date_joined": "2025-04-16T04:28:13.609Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$1lBISFhZnra3oxXZbUUT0M$Up11tE2kT2jrk381P+HgIok6tYc8gpqkUlBOB9tvpG0=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "robertweaver@example.net",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:13.826Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Uh3A3OuTlz4S10AbIBLf0h$srGAzv0UuKH3YHUQcm/YAgKMz+JzlurpvctJMtbG/i0=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "ericabarnett@example.net",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:14.048Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$0e2CPcm0takrRyR82qbMz7$0dHysVxD1rRV55VGue0WErYRu9c/cb5AiMyV29YRmQA=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "samanthamedina@example.com",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:14.267Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$xM35zl0VqRJ2Un0JrSYHaF$dElSrK8ZjLCOE/dEIqEnDAUCTXvftO36lHSzuG7PXJ8=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "bpayne@example.com",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:14.486Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$2Ehr80wZhK8sRe2p9gNYNe$ztgNxeVzZhQ9Z6vnV+/58WnVatb388bU2U6gPpLfL4U=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "lrosales@example.net",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:14.704Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 16,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$fxATKWN6r6LjEb1AtVDx8k$bYlgRI9+DUDm8X6MfoFxMSBy214rIWofl8HPXL1BMmU=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "juliasalazar@example.org",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:14.923Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 17,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$QtBlG7IY99mJfd9DU3HCpw$dTMHbHmwb7prVqE2y2mLrV/dXMOmr5ccS7bgKfajtpk=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "ylucas@example.com",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:15.142Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 18,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$4tMCptk4nJs4uOPwn1QF2A$Iu0IJxA+lLSQiL7QSJyx/tp2gr1gL/n+eue4sm+HcH8=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "lopezsamuel@example.net",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:15.361Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 19,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$KpLXf0D0A2vQjUVaWba7zy$tuZvcQzNqe4QQqPJZHFPStqkaOWewOhANP2u+Et2xfs=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "campbellconnie@example.com",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:15.581Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "restaurant.customuser",
+  "pk": 20,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$IiOOY6te6E6HWlJmCWttow$mfF+cb83DTNgIF3XAu/Yxp3JTOhFhVlreO0E0fJeaww=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "email": "daniel36@example.com",
+    "role": "customer",
+    "is_active": true,
+    "is_staff": false,
+    "date_joined": "2025-04-16T04:28:15.799Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

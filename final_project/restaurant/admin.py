@@ -110,6 +110,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('order_id', 'customer__email', 'transaction_id')
     list_filter = ('status', 'is_paid')
     ordering = ('-order_date',)
+    readonly_fields = ('order_date',) 
 
     fieldsets = (
         (None, {

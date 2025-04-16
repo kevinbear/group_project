@@ -78,6 +78,12 @@ class MenuItem(models.Model) :
     def __str__(self):
         return f"{self.name} - ${self.price} ({self.get_category_display()})"  # This should work
     
+class GuestOrder(models.Model):
+    session_id = models.CharField(max_length=100)
+    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
 # class Order(models.Model):
 #     STATUS_CHOICES = [
 #         ('pending', 'Pending'),
@@ -109,11 +115,9 @@ class MenuItem(models.Model) :
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    quantity = models.PositiveIntegerField()
     order_date = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('completed', 'Completed')], default='pending')
-    # item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     is_paid = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
     card_last4 = models.CharField(max_length=4, null=True, blank=True)
@@ -121,12 +125,8 @@ class Order(models.Model):
     guest_name = models.CharField(max_length=100, null=True, blank=True)
     customer = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
 
-    ## Explicitly set the primary key field name if it's not named 'id'
-    # class Meta:
-    #     db_table = 'restaurant_order'  # Ensure it matches your table name
-    
     def __str__(self):
-        return f"Order {self.order_id} by {self.customer.email}"
+        return f"Order {self.order_id} by {self.customer.email if self.customer else self.guest_name}"
 
 # class Order(models.Model):
 #     guest_name = models.CharField(max_length=255)
@@ -142,15 +142,11 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, null=True)
     item_name = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # Price per item
 
     def __str__(self):
         return f"{self.quantity} x {self.item_name}"
     
-class GuestOrder(models.Model):
-    session_id = models.CharField(max_length=100)
-    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    added_at = models.DateTimeField(auto_now_add=True)

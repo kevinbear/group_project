@@ -1,0 +1,22 @@
+[
+{
+  "model": "restaurant.guestorder",
+  "pk": 5,
+  "fields": {
+    "session_id": "zbizcfghluzloel7a5i7wz18zs5cuw4t",
+    "item": 5,
+    "quantity": 3,
+    "added_at": "2025-04-16T06:25:58.249Z"
+  }
+},
+{
+  "model": "restaurant.guestorder",
+  "pk": 6,
+  "fields": {
+    "session_id": "zbizcfghluzloel7a5i7wz18zs5cuw4t",
+    "item": 3,
+    "quantity": 2,
+    "added_at": "2025-04-16T06:26:04.136Z"
+  }
+}
+]

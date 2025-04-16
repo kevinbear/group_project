@@ -1,0 +1,112 @@
+[
+{
+  "model": "restaurant.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": 11,
+    "phone_number": null,
+    "address": "9778 James Mission\nLopezfort, HI 58546",
+    "date_of_birth": "1913-02-08",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 2,
+  "fields": {
+    "user": 12,
+    "phone_number": null,
+    "address": "10376 Caldwell Circles Apt. 754\nLake Kendra, NE 57046",
+    "date_of_birth": "1934-12-27",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 3,
+  "fields": {
+    "user": 13,
+    "phone_number": null,
+    "address": "7363 Curtis Locks Apt. 878\nSouth Jessicashire, KY 26213",
+    "date_of_birth": "1911-01-22",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 4,
+  "fields": {
+    "user": 14,
+    "phone_number": null,
+    "address": "166 Glover Gateway Apt. 098\nPaulfort, MI 45352",
+    "date_of_birth": "1993-08-14",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 5,
+  "fields": {
+    "user": 15,
+    "phone_number": null,
+    "address": "63045 Farrell Highway\nNorth Tonyafurt, WA 24232",
+    "date_of_birth": "2020-10-15",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 6,
+  "fields": {
+    "user": 16,
+    "phone_number": null,
+    "address": "854 Berg Turnpike\nWest Deborah, MP 58592",
+    "date_of_birth": "1986-05-19",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 7,
+  "fields": {
+    "user": 17,
+    "phone_number": null,
+    "address": "559 Garcia Course\nDixonville, IA 15877",
+    "date_of_birth": "2008-04-08",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 8,
+  "fields": {
+    "user": 18,
+    "phone_number": null,
+    "address": "949 Hart Prairie\nTheresaside, OH 62362",
+    "date_of_birth": "2014-08-12",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 9,
+  "fields": {
+    "user": 19,
+    "phone_number": null,
+    "address": "5626 Mary Turnpike Suite 598\nDavidville, ID 17537",
+    "date_of_birth": "2006-07-19",
+    "profile_picture": ""
+  }
+},
+{
+  "model": "restaurant.userprofile",
+  "pk": 10,
+  "fields": {
+    "user": 20,
+    "phone_number": null,
+    "address": "3142 Morgan Village\nJonesmouth, RI 21604",
+    "date_of_birth": "2000-12-18",
+    "profile_picture": ""
+  }
+}
+]

@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model, logout, authenticate, login
 from django.views.decorators.http import require_POST
 from restaurant.forms import SignupForm, LoginForm, PaymentForm
 from restaurant.models import CustomUser
-from .models import MenuItem, CustomUser, UserProfile, Order, GuestOrder  # Import your model
+from .models import MenuItem, CustomUser, UserProfile, Order, OrderItem, GuestOrder  # Import your model
 from decimal import Decimal
 import random, secrets, string, json
 from collections import defaultdict
@@ -184,12 +184,13 @@ def shopping_cart(request):
             )
 
             # Create OrderItems related to the Order
-            for item in guest_orders:
+            for guest_item in guest_orders:
                 OrderItem.objects.create(
                     order=order,
-                    item=item.item,
-                    quantity=item.quantity,
-                    total_price=item.item.price * item.quantity
+                    item=guest_item.item,
+                    item_name=guest_item.item.name,
+                    quantity=guest_item.quantity,
+                    price=guest_item.item.price
                 )
 
             # Delete the GuestOrders after creating OrderItems

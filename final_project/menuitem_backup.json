@@ -1,0 +1,302 @@
+[
+{
+  "model": "restaurant.menuitem",
+  "pk": 1,
+  "fields": {
+    "name": "Pancakes",
+    "price": "6.99",
+    "description": "Fluffy, golden pancakes served with butter and warm maple syrup.",
+    "category": "breakfast",
+    "image": "menu_images/pancakes.jpg",
+    "combo_price": "4.99"
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 2,
+  "fields": {
+    "name": "French Toast",
+    "price": "7.99",
+    "description": "Thick slices of brioche dipped in cinnamon-vanilla egg batter, griddled to perfection.",
+    "category": "breakfast",
+    "image": "menu_images/french_toast_n9rfOCD.jpg",
+    "combo_price": "4.99"
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 3,
+  "fields": {
+    "name": "Waffles",
+    "price": "7.99",
+    "description": "Crisp on the outside, soft on the inside – our classic Belgian waffles come with syrup and butter.",
+    "category": "breakfast",
+    "image": "menu_images/Waffles_gi0yvFI.jpg",
+    "combo_price": "4.99"
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 4,
+  "fields": {
+    "name": "Omelette",
+    "price": "9.99",
+    "description": "A hearty three-egg omelette filled with your choice of cheese, veggies, and meats.",
+    "category": "breakfast",
+    "image": "menu_images/Omelette1.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 5,
+  "fields": {
+    "name": "2 Eggs & Bacon or Sausage",
+    "price": "8.49",
+    "description": "Two farm-fresh eggs cooked your way, served with crispy bacon or savory sausage.",
+    "category": "breakfast",
+    "image": "menu_images/2_Eggs__Bacon_or_Sausage.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 6,
+  "fields": {
+    "name": "Maple Oatmeal",
+    "price": "5.49",
+    "description": "Warm and wholesome oats simmered with maple syrup, topped with brown sugar and cinnamon.",
+    "category": "breakfast",
+    "image": "menu_images/MapleOatmeal.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 7,
+  "fields": {
+    "name": "Fruit Bowl",
+    "price": "6.59",
+    "description": "A refreshing mix of seasonal fruits, perfect as a light breakfast or a sweet side.",
+    "category": "breakfast",
+    "image": "menu_images/Fruit_Bowl_Y5jhaeZ.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 8,
+  "fields": {
+    "name": "Grilled Chicken Sandwich",
+    "price": "8.99",
+    "description": "Tender grilled chicken breast with lettuce, tomato, and mayo on a toasted bun.",
+    "category": "lunch",
+    "image": "menu_images/Grilled_Chicken_Sandwich_a5QxfxH.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 9,
+  "fields": {
+    "name": "BLT Sandwich",
+    "price": "9.99",
+    "description": "Crispy bacon, fresh lettuce, and juicy tomato layered between toasted bread with mayo.",
+    "category": "lunch",
+    "image": "menu_images/BLT_Sandwich_xadqK9r.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 10,
+  "fields": {
+    "name": "Ham and Swiss Sandwich",
+    "price": "7.99",
+    "description": "Classic deli-style sandwich with smoked ham, Swiss cheese, and mustard on your choice of bread.",
+    "category": "lunch",
+    "image": "menu_images/Ham_and_Swiss_Sandwich_5HgZ3lO.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 11,
+  "fields": {
+    "name": "Caesar Salad",
+    "price": "9.99",
+    "description": "Crisp romaine lettuce tossed with creamy Caesar dressing, croutons, and parmesan cheese.",
+    "category": "lunch",
+    "image": "menu_images/Caesar_Salad_Afbrwv6.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 12,
+  "fields": {
+    "name": "CA Cobb Salad",
+    "price": "15.99",
+    "description": "A vibrant mix of greens topped with grilled chicken, avocado, bacon, egg, tomato, and blue cheese crumbles.",
+    "category": "lunch",
+    "image": "menu_images/CA_Cobb_Salad_dm0kknQ.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 13,
+  "fields": {
+    "name": "Spaghetti",
+    "price": "14.99",
+    "description": "Classic spaghetti pasta served with savory marinara sauce and grated parmesan.",
+    "category": "lunch",
+    "image": "menu_images/Spaghetti_04kD3JG.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 14,
+  "fields": {
+    "name": "Tomato Basil Soup",
+    "price": "6.99",
+    "description": "Smooth, rich tomato soup infused with fresh basil — comfort in a bowl.",
+    "category": "lunch",
+    "image": "menu_images/Tomato_Basil_Soup_r1Cqby0.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 15,
+  "fields": {
+    "name": "Chicken Soup",
+    "price": "7.99",
+    "description": "A hearty blend of tender chicken, vegetables, and noodles in warm, flavorful broth.",
+    "category": "lunch",
+    "image": "menu_images/Chicken_Soup_icDk9qx.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 16,
+  "fields": {
+    "name": "Cheeseburger",
+    "price": "16.49",
+    "description": "A juicy grilled beef patty topped with melted cheddar cheese, lettuce, tomato, pickles, and onions, served on a toasted bun with your choice of sauce.",
+    "category": "lunch",
+    "image": "menu_images/Cheeseburger.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 17,
+  "fields": {
+    "name": "Filet Mignon",
+    "price": "27.99",
+    "description": "A tender, premium-cut filet grilled to your liking, served with a side of seasonal vegetables.",
+    "category": "dinner",
+    "image": "menu_images/Filet_Miganon_97Jd3CT.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 18,
+  "fields": {
+    "name": "New York Strip Steak",
+    "price": "25.99",
+    "description": "Juicy and flavorful, this classic steak is seared to perfection and paired with your choice of side.",
+    "category": "dinner",
+    "image": "menu_images/NY_Strip_Steak_1lAmdLI.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 19,
+  "fields": {
+    "name": "Grilled Salmon",
+    "price": "23.49",
+    "description": "Wild-caught salmon grilled with a touch of lemon and herbs, served with roasted vegetables.",
+    "category": "dinner",
+    "image": "menu_images/Grilled_Salmon_3oexZTl.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 20,
+  "fields": {
+    "name": "Grilled Halibut",
+    "price": "23.49",
+    "description": "Light and flaky halibut fillet grilled and served with a garlic butter glaze and fresh sides.",
+    "category": "dinner",
+    "image": "menu_images/Grilled_Halibut1_VIve6tR.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 21,
+  "fields": {
+    "name": "Pasta Alfredo",
+    "price": "17.99",
+    "description": "Creamy Alfredo sauce tossed with fettuccine pasta and topped with parmesan — rich and comforting.",
+    "category": "dinner",
+    "image": "menu_images/Paste_Alfredo_ir1Vn8K.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 22,
+  "fields": {
+    "name": "Pesto Penne",
+    "price": "18.99",
+    "description": "Penne pasta tossed in house-made basil pesto with cherry tomatoes and grated cheese.",
+    "category": "dinner",
+    "image": "menu_images/Pesto_Penne_WBw56IF.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 23,
+  "fields": {
+    "name": "Lamb Chops with Side Salad",
+    "price": "34.99",
+    "description": "Succulent lamb chops seasoned and grilled, served with a fresh garden side salad.",
+    "category": "dinner",
+    "image": "menu_images/Lamb_chops_with_side_salad_fZtiBsu.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 24,
+  "fields": {
+    "name": "Lobster",
+    "price": "32.99",
+    "description": "Succulent lobster tail meat, pan-seared in garlic herb butter, served with grilled asparagus and creamy mashed potatoes.",
+    "category": "dinner",
+    "image": "menu_images/lobster.jpg",
+    "combo_price": null
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 25,
+  "fields": {
+    "name": "Apple Walnut Salad",
+    "price": "11.99",
+    "description": "Mixed greens with sliced apples, candied walnuts, blue cheese, and a light vinaigrette.",
+    "category": "dinner",
+    "image": "menu_images/Walnut_Salad_07j5onB.jpg",
+    "combo_price": null
+  }
+}
+]
