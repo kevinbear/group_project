@@ -46,9 +46,6 @@ def menu(request):
 def about(request):
     return render(request, 'about.html')
 
-# def ordering(request):
-#     return render(request, 'ordering.html')
-
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -177,9 +174,6 @@ def shopping_cart(request):
     }
     return render(request, 'shopping_cart.html', context)
 
-# def checkout(request):
-    
-
 def order_success(request):
     # Optional: show last 4 digits of the card (if you stored it)
     last4 = request.session.pop('last4', None)
@@ -188,7 +182,6 @@ def order_success(request):
         'last4': last4
     })
     
-
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
@@ -256,8 +249,7 @@ def user_profile(request):
         'orders_json': json.dumps(serialized_orders),
     })
     
-
-# Work in session
+# Use session to store cart data
 @require_POST
 def add_to_cart(request):
     if not request.session.session_key:

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
+{% block headerfile %}
+    <link href="{% static 'css/404.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/404.js' %}"></script>
+{% endblock %}
 {% block placeholder %}
 <main>
     <div class="container-fluid d-flex justify-content-center align-items-center melting-background" style="background: rgba(34, 139, 238, 0.358);">
@@ -13,129 +17,5 @@
             </div>
         </div>
     </div>
-    
-    <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        position: relative;
-        z-index: -10;
-        overflow: auto;
-    }
-    main{
-        flex: 1;
-        z-index: -1;
-        position: relative;
-        padding-bottom: 50px; /* Extra space for mobile users */
-    }
-    @keyframes melt {
-        0% { transform: translateY(0) scaleX(1); }
-        30% { transform: translateY(10px) scaleX(1.05); }
-        50% { transform: translateY(5px) scaleX(1.1); }
-        70% { transform: translateY(10px) scaleX(1.1); }
-        100% { transform: translateY(15px) scaleX(1.2); }
-    }
-    
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        25% { transform: translateY(-10px); }
-        50% { transform: translateY(10px); }
-        75% { transform: translateY(-10px); }
-    }
-    
-    /* Stream effect */
-    @keyframes water-flow {
-        0% { left: -100%; opacity: 1; }
-        100% { left: 100%; opacity: 0; }
-    }
-    
-    /* Chessboard pattern for background */
-    @keyframes chessboard-melt {
-        0% { background-position: 0% 0%; }
-        100% { background-position: 100% 100%; }
-    }
-    
-    .melting-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 150px);
-        grid-template-rows: repeat(auto-fill, 150px);
-        gap: 20px;
-        z-index: -1;
-    }
-    
-    /* Dripping Effect */
-    @keyframes drip {
-        0% { background-size: 100px 100px; }
-        50% { background-size: 100px 110px; }
-        100% { background-size: 100px 100px; }
-    }
-    
-    /* Applying the melting text animation */
-    .melting-text {
-        font-family: "Impact", sans-serif;
-        font-size: 100px;
-        color: #ff4500;
-        position: relative;
-        display: inline-block;
-        animation: melt 3s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
-    }
-    
-    .melting-text::after {
-        content: attr(data-text);
-        position: absolute;
-        left: 0;
-        top: 0;
-        color: inherit;
-        opacity: 0.8;
-        animation: melt 3s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
-    }
-    
-    /* Button stream animation */
-    #home-button {
-        position: relative;
-        overflow: hidden;
-        animation: none;
-        z-index: 10; /* Higher than other content */
-    }
-    
-    footer {
-        position: relative;
-        z-index: 1; /* Ensure it stays above the background */
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .melting-text {
-            font-size: 50px; /* Reduce text size for mobile */
-        }
-
-        .container-fluid {
-            padding: 20px;
-        }
-
-        main {
-            min-height: auto; /* Remove fixed height so scrolling works */
-            height: auto;
-        }
-    }
-    </style>
-    
-    <script>
-        document.getElementById("home-button").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevent the default action for a moment
-            this.classList.add("clicked"); // Add the "clicked" class to trigger the animation
-    
-            // Wait for the animation to finish before redirecting
-            setTimeout(function() {
-                window.location.href = "{% url 'home' %}"; // Redirect to the home page
-            }, 3000); // Time should match the animation duration (3s)
-        });
-    </script>
 </main>
 {% endblock %}
