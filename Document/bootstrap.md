@@ -17,8 +17,12 @@ crossorigin="anonymous"></script>`
 ### Compoents
 
 1. Navbar
-2. Button
-3. Form
+2. Form
+3. Buttons
+4. Button group
+5. Cards
+6. Dropdowns
+3. Alerts
 
 ### Utility
 

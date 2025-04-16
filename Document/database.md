@@ -1,3 +1,87 @@
+# Database Scheme
+## Tables:
+### `CustomUser` Table
+
+| Field         | Type                     | Options / Notes                                     |
+|---------------|--------------------------|-----------------------------------------------------|
+| id            | AutoField (implicit)     | Primary Key                                         |
+| first_name    | CharField                | `max_length=30`, `blank=True`                       |
+| last_name     | CharField                | `max_length=30`, `blank=True`                       |
+| email         | EmailField               | `unique=True`                                       |
+| role          | CharField                | `max_length=10`, `choices=ROLE_CHOICES`, default=`customer` |
+| is_active     | BooleanField             | `default=True`                                      |
+| is_staff      | BooleanField             | `default=False`                                     |
+| date_joined   | DateTimeField            | `default=now`                                       |
+
+---
+
+### `UserProfile` Table
+
+| Field           | Type              | Options / Notes                              |
+|------------------|-------------------|----------------------------------------------|
+| id               | AutoField         | Primary Key (implicit)                        |
+| user             | OneToOneField     | To `CustomUser`, `on_delete=CASCADE`         |
+| phone_number     | CharField         | `max_length=15`, `blank=True`, `null=True`   |
+| address          | TextField         | `blank=True`, `null=True`                    |
+| date_of_birth    | DateField         | `blank=True`, `null=True`                    |
+| profile_picture  | ImageField        | `upload_to='profile_pictures/'`, `blank=True`, `null=True` |
+
+---
+
+### `MenuItem` Table
+
+| Field        | Type            | Options / Notes                                            |
+|--------------|------------------|------------------------------------------------------------|
+| item_id      | AutoField         | Primary Key                                                |
+| name         | CharField         | `max_length=255`                                           |
+| price        | DecimalField      | `max_digits=10`, `decimal_places=2`                        |
+| description  | TextField         | `blank=True`, `null=True`                                  |
+| category     | CharField         | `max_length=50`, `choices=CATEGORY_CHOICES`, `default='breakfast'` |
+| image        | ImageField        | `upload_to='menu_images/'`, `blank=True`, `null=True`      |
+| combo_price  | DecimalField      | `max_digits=10`, `decimal_places=2`, `blank=True`, `null=True` |
+
+---
+
+### `GuestOrder` Table
+
+| Field        | Type              | Options / Notes                            |
+|--------------|-------------------|--------------------------------------------|
+| id           | AutoField         | Primary Key (implicit)                      |
+| session_id   | CharField         | `max_length=100`                            |
+| item         | ForeignKey        | To `MenuItem`, `on_delete=CASCADE`         |
+| quantity     | IntegerField      | `default=1`                                 |
+| added_at     | DateTimeField     | `auto_now_add=True`                         |
+
+---
+
+### `Order` Table
+
+| Field           | Type              | Options / Notes                                            |
+|------------------|-------------------|------------------------------------------------------------|
+| order_id         | AutoField         | Primary Key                                                |
+| order_date       | DateTimeField     | `auto_now_add=True`                                        |
+| total_price      | DecimalField      | `max_digits=10`, `decimal_places=2`, `null=True`           |
+| status           | CharField         | `max_length=20`, `choices=[('pending', 'Pending'), ('completed', 'Completed')]`, `default='pending'` |
+| is_paid          | BooleanField      | `default=False`                                            |
+| transaction_id   | CharField         | `max_length=100`, `null=True`, `blank=True`                |
+| card_last4       | CharField         | `max_length=4`, `null=True`, `blank=True`                  |
+| card_name        | CharField         | `max_length=100`, `null=True`, `blank=True`                |
+| guest_name       | CharField         | `max_length=100`, `null=True`, `blank=True`                |
+| customer         | ForeignKey        | To `CustomUser`, `on_delete=SET_NULL`, `null=True`, `blank=True` |
+
+---
+
+### `OrderItem` Table
+
+| Field       | Type              | Options / Notes                                     |
+|-------------|-------------------|-----------------------------------------------------|
+| id          | AutoField         | Primary Key (implicit)                              |
+| order       | ForeignKey        | To `Order`, `related_name='items'`, `on_delete=CASCADE` |
+| item        | ForeignKey        | To `MenuItem`, `on_delete=CASCADE`, `null=True`     |
+| item_name   | CharField         | `max_length=255`                                    |
+| quantity    | PositiveIntegerField | `default=1`                                     |
+| price       | DecimalField      | `max_digits=10`, `decimal_places=2`                 |
+
 # Rebuind database
 ### Step 1: Delete the database file
 ```bash
@@ -138,11 +222,3 @@ python manage.py loaddata customuser_backup.json
 python manage.py loaddata userprofile_backup.json
 ``` 
 
-# Database Scheme
-## Tables:
-### CustomUser
-### UserProfile
-### MenuItem
-### GuestOrder
-### Order
-### OrderItem
