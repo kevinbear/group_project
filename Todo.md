@@ -1,10 +1,10 @@
 ## 3/31 ToDo List
 - [x] Integrated Erin's Menu design to my page
-- [ ] Finish the login page with form
-- [ ] Redesign restaurant menu page
-- [ ] Give a 404 on the not design page on render
+- [x] Finish the login page with form
+- [x] Redesign restaurant menu page
+- [x] Give a 404 on the not design page on render
 ## Documentation of each person need to know if they need any reference in this project
-- [ ] How to run our project
+- [x] How to run our project
 - [ ] Windows/macOS environment Setup
 - [ ] Start make the document for each person (Database)
 - [ ] Database (admin, models, settings)

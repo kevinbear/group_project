@@ -137,3 +137,12 @@ python manage.py loaddata guestorder_backup.json
 python manage.py loaddata customuser_backup.json
 python manage.py loaddata userprofile_backup.json
 ``` 
+
+# Database Scheme
+## Tables:
+### CustomUser
+### UserProfile
+### MenuItem
+### GuestOrder
+### Order
+### OrderItem
