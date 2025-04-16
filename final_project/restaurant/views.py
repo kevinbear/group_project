@@ -196,29 +196,35 @@ def logout_view(request):
     logout(request)  # Logs out the user
     return redirect('home')  # Redirect after logout
 
-from datetime import datetime
-
 def user_profile(request):
     user = request.user
 
     # Check if the user has a profile
     profile = getattr(user, 'profile', None)
     
-    # If no profile exists, create one
     if profile is None:
         profile = UserProfile.objects.create(user=user)
 
-    # Format the date of birth (if it exists)
     formatted_date = None
     if profile.date_of_birth:
         try:
             date_obj = datetime.strptime(str(profile.date_of_birth), "%B %d, %Y")
             formatted_date = date_obj.strftime("%Y-%m-%d")
         except ValueError:
-            # If date is already in date format, just use strftime
             formatted_date = profile.date_of_birth.strftime("%Y-%m-%d")
 
-    # Handle form submission
+    # ✅ Get user's orders with related items
+    orders = Order.objects.filter(customer=user).prefetch_related('items').order_by('-order_date')
+    for order in orders:
+        order.item_list = [
+            {
+                "item_name": item.item_name,
+                "quantity": item.quantity,
+                "price": float(item.price),  # Cast to float if it's Decimal
+            }
+            for item in order.items.all()
+        ]
+
     if request.method == 'POST':
         user_form = CustomUserForm(request.POST, instance=user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
@@ -231,12 +237,23 @@ def user_profile(request):
     else:
         user_form = CustomUserForm(instance=user)
         profile_form = UserProfileForm(instance=profile)
+    
+    serialized_orders = [
+    {
+        "id": order.order_id,
+        "order_date": order.order_date.strftime("%Y-%m-%d %H:%M:%S"),
+        "items": order.item_list,
+    }
+    for order in orders
+]
 
     return render(request, 'user_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'profile': profile,
-        'dob': formatted_date
+        'dob': formatted_date,
+        'orders': orders,  # ✅ Pass orders to template
+        'orders_json': json.dumps(serialized_orders),
     })
     
 

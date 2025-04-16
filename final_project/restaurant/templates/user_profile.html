@@ -9,7 +9,7 @@
             <div class="profile-frame">
                 <img src="{% static 'profile_images/marine_animal_1.jpg'%}" alt="profile_image" class="profile-img img-fluid" />
             </div>
-            <h2 class="text-black fw-bold mb-0 username">{{ user.first_name }} {{ user.last_name }}</h1>
+            <h2 class="text-black fw-bold mb-0 username">{{ user.first_name }} {{ user.last_name }}</h2>
             <div class="ms-auto" id="control-items">
                 <button class="btn btn-outline-primary ms-2 py-2"><i class="fa-solid fa-ellipsis fa-lg"></i></button>
                 <button class="btn btn-outline-primary py-2 ms-2">Order</i></button>
@@ -140,7 +140,7 @@
                     id="phone_number" 
                     name="phone_number" 
                     placeholder="(xxx)-xxx xxxx" 
-                    value="{% if user.phone_number %}{{ user.phone_number }}{% else %}{{ user.phone_number|default:'' }}{% endif %}" 
+                    value="{{ user.phone_number|default_if_none:'' }}" 
                     oninput="formatPhoneNumber(this)">
                 </div>
                 <div class="mb-3">
@@ -158,17 +158,6 @@
                     <label for="date_of_birth" class="form-label">Date of Birth</label>
                     <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="No date of birth" value="{{ profile_form.date_of_birth.value }}
                     ">
-                </div>
-                <div class="mb-3">
-                    {% if user.profile_picture %}
-                        <label class="form-label">Profile Picture</label>
-                        <div class="mb-3">
-                            <img src="{{ profile_form.profile_picture.value.url }}" alt="user_image" class="img-thumbnail">
-                        </div>
-                        <input type="file" class="form-control" name="profile_picture" id="user_profile_image">
-                    {% else %}
-                        <p>No profile picture uploaded.</p>
-                    {% endif %}
                 </div>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
@@ -226,64 +215,85 @@
             <h3 class="mt-3">
                 <b>Order History</b>
             </h3>
+            {% if orders %}
             <table id="history_menu_table" class="display">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>Order ID</th>
-                    <th>Item</th>
-                    <th>Quatity</th>
-                    <th>Price</th>
-                    <th>Order Date</th>
+                    <th>Transaction ID</th>
                     <th>Total Price</th>
+                    <th>Order Date</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>00001</td>
-                    <td>Lobser</td>
-                    <td>2</td>
-                    <td>$30</td>
-                    <td>01/01/24</td>
-                    <td>$60</td>
-                    <td>completed</td>
-                  </tr>
-                  <tr>
-                    <td>00002</td>
-                    <td>NY Stripe</td>
-                    <td>2</td>
-                    <td>$10</td>
-                    <td>01/01/25</td>
-                    <td>$20</td>
-                    <td>processing</td>
-                  </tr>
-                  <tr>
-                    <td>00003</td>
-                    <td>chessburger</td>
-                    <td>4</td>
-                    <td>$20</td>
-                    <td>03/01/25</td>
-                    <td>$80</td>
-                    <td>cancelled</td>
-                  </tr>
-                  <!-- Add more rows as needed -->
-                  <tr>
-                    <td>00004</td>
-                    <td>chessburger</td>
-                    <td>1</td>
-                    <td>$20</td>
-                    <td>03/028/25</td>
-                    <td>$20</td>
-                    <td>pending</td>
-                  </tr>
+                {% for order in orders %}
+                    <tr data-items="items_{{ order.order_id }}">
+                        <td class="details-control"></td>
+                        <td> {{ order.order_id }}</td>
+                        <td>{{ order.transaction_id }}</td>
+                        <td>$ {{ order.total_price }}</td>
+                        <td>{{ order.order_date|date:"Y-m-d H:i" }}</td>
+                        <td>{{ order.status|capfirst }} | Paid: {{ order.is_paid }}</td>
+                    </tr>
+                {% endfor %}
                 </tbody>
               </table>
+              {% else %}
+                <p>You haven’t placed any orders yet.</p>
+              {% endif %}
         </div>
+        {% for order in orders %}
+        <script id="items_{{ order.order_id }}" type="application/json">
+            [
+                {% for item in order.items.all %}
+                    {
+                        "item_name": "{{ item.item_name }}",
+                        "quantity": "{{ item.quantity }}",
+                        "price": "{{ item.price }}"
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
+        </script>
+        {% endfor %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const table = document.getElementById('history_menu_table');
+                const rows = table.querySelectorAll('tbody tr');
+            
+                rows.forEach(row => {
+                    row.addEventListener('click', function () {
+                        // Check if details already displayed
+                        if (this.classList.contains('shown')) {
+                            this.nextElementSibling.remove(); // Remove details row
+                            this.classList.remove('shown');
+                        } else {
+                            const orderId = this.dataset.items.split('_')[1];
+                            const data = JSON.parse(document.getElementById('items_' + orderId).textContent);
+                            const detailRow = document.createElement('tr');
+                            detailRow.classList.add('order-detail');
+                            detailRow.innerHTML = `
+                                <td colspan="6">
+                                    <ul>
+                                        ${data.map(item => `
+                                            <li>${item.quantity} x ${item.item_name} - $${item.price}</li>
+                                        `).join('')}
+                                    </ul>
+                                </td>
+                            `;
+                            this.after(detailRow);
+                            this.classList.add('shown');
+                        }
+                    });
+                });
+            });
+        </script>
     </div>
 </main>
 <style>
     .side-bar {
-        height: 105vh;
+        height: 90vh;
     }
     .user-sidebar {
         background: rgb(255, 255, 255);
@@ -354,6 +364,7 @@
         border: 0.1rem solid rgb(124, 124, 124); /* Set border width and color */
         box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(0, 0, 0, 0.2),;
         transform: translate(40%, -30%);
+        overflow: hidden;
     }
     .profile-img {
         border-radius: 100%;
@@ -364,7 +375,7 @@
         .profile-frame {
             background: rgb(255, 255, 255);
             height: 7rem;
-            width: 7rem;
+            width: 9rem;
             border-radius: 100%;
             display: flex;
             justify-content: center;
@@ -373,13 +384,21 @@
             border: 0.1rem solid rgb(124, 124, 124); /* Set border width and color */
             box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(0, 0, 0, 0.2),;
             transform: translate(20%, -30%);
+            overflow: hidden;
         }
         .profile-img {
             border-radius: 100%;
             height: 6.5rem; /* Adjust height to fit closer to the div */
             width: 6.5rem; /* Adjust width to fit closer to the div */
         }
-        
+        body{
+            height: inherit;
+            position: relative;
+        }
+        footer{
+            position: absolute;
+            bottom: 100%;
+        }
     }
 </style>
 <script>
@@ -402,6 +421,19 @@
                 const target = this.getAttribute('data-target');
                 document.getElementById(target).style.display = 'block';
             });
+        });
+    });
+</script>
+<script>
+    document.querySelectorAll('.user-sidebar').forEach(tab => {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.user-sidebar').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.col').forEach(section => section.style.display = 'none');
+            this.classList.add('active');
+
+            const targetId = this.getAttribute('data-target');
+            const section = document.getElementById(targetId);
+            if (section) section.style.display = 'block';
         });
     });
 </script>
