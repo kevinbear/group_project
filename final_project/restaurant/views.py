@@ -3,12 +3,13 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout, authenticate, login
 from django.views.decorators.http import require_POST
-from restaurant.forms import SignupForm, LoginForm, PaymentForm
+from restaurant.forms import SignupForm, LoginForm, PaymentForm, CustomUserForm, UserProfileForm
 from restaurant.models import CustomUser
 from .models import MenuItem, CustomUser, UserProfile, Order, OrderItem, GuestOrder  # Import your model
 from decimal import Decimal
 import random, secrets, string, json
 from collections import defaultdict
+from datetime import datetime
 
 # Create your views here
 def home(request):
@@ -99,40 +100,6 @@ def signup(request):
         form = SignupForm()
 
     return render(request, 'signup.html', {'form': form})
-
-# def shopping_cart(request):
-#     session_id = request.session.session_key
-#     if not session_id:
-#         request.session.create()
-#         session_id = request.session.session_key
-    
-#     guest_orders = GuestOrder.objects.filter(session_id=session_id)
-#     cart_items = []
-    
-#     for order in guest_orders:
-#         cart_items.append({
-#             "item_id": order.item.item_id,
-#             "image_url": order.item.image.url if order.item.image else None,
-#             "name": order.item.name,
-#             "price": order.item.price,
-#             "quantity": order.quantity,
-#             "subtotal": round(order.item.price * order.quantity, 2)
-#         })
-    
-#     subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
-#     delivery_fee = Decimal("5.00")
-#     tax = (subtotal + delivery_fee) * Decimal("0.0775")
-#     total_price = tax + subtotal
-    
-#     context = {
-#         "cart_items": cart_items,
-#         "subtotal": subtotal,
-#         "discount": 0,
-#         "delivery_fee": delivery_fee,
-#         "tax": round(tax, 2),
-#         "total_price": round(total_price, 2),
-#     }
-#     return render(request, 'shopping_cart.html', context)
 
 def shopping_cart(request):
     session_id = request.session.session_key
@@ -229,15 +196,48 @@ def logout_view(request):
     logout(request)  # Logs out the user
     return redirect('home')  # Redirect after logout
 
+from datetime import datetime
+
 def user_profile(request):
-    if request.user.is_authenticated:
-        user = request.user
-        profile = {} # user.profile  # Assuming you have a OneToOne relationship with UserProfile
-        return render(request, 'user_profile.html', {'profile': profile})
-    else:
-        messages.error(request, "You need to be logged in to view this page.")
-        return redirect('login')
+    user = request.user
+
+    # Check if the user has a profile
+    profile = getattr(user, 'profile', None)
     
+    # If no profile exists, create one
+    if profile is None:
+        profile = UserProfile.objects.create(user=user)
+
+    # Format the date of birth (if it exists)
+    formatted_date = None
+    if profile.date_of_birth:
+        try:
+            date_obj = datetime.strptime(str(profile.date_of_birth), "%B %d, %Y")
+            formatted_date = date_obj.strftime("%Y-%m-%d")
+        except ValueError:
+            # If date is already in date format, just use strftime
+            formatted_date = profile.date_of_birth.strftime("%Y-%m-%d")
+
+    # Handle form submission
+    if request.method == 'POST':
+        user_form = CustomUserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "Profile updated.")
+            return redirect('user_profile')
+    else:
+        user_form = CustomUserForm(instance=user)
+        profile_form = UserProfileForm(instance=profile)
+
+    return render(request, 'user_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'profile': profile,
+        'dob': formatted_date
+    })
     
 
 # Work in session

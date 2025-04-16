@@ -1,5 +1,5 @@
 from django import forms
-from restaurant.models import CustomUser
+from restaurant.models import CustomUser, UserProfile
 
 class SignupForm(forms.Form):
     first_name = forms.CharField(max_length=100)
@@ -46,3 +46,19 @@ class PaymentForm(forms.Form):
         if not data or len(data) != 5 or '/' not in data:
             raise forms.ValidationError("Expiry must be in MM/YY format.")
         return data
+    
+class CustomUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if CustomUser.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
+            raise forms.ValidationError("This email is already in use.")
+        return email
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['phone_number', 'address', 'date_of_birth', 'profile_picture']  # or any fields from UserProfile

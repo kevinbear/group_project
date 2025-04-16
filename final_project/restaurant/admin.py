@@ -57,42 +57,6 @@ class MenuItemAdmin(admin.ModelAdmin):
     image_preview.allow_tags = True
     image_preview.short_description = 'Preview'
 
-# @admin.register(Order)
-# class OrderAdmin(admin.ModelAdmin):
-#     # Customize the list display to include transaction_id and other relevant fields
-#     list_display = (
-#         'order_id', 'customer', 'item', 'quantity', 
-#         'total_price', 'status', 'is_paid', 
-#         'card_name', 'card_last4', 'transaction_id', 'order_date',
-#     )
-    
-#     # Add search functionality for transaction_id and other fields
-#     search_fields = ('customer__email', 'transaction_id', 'card_name')
-    
-#     # Filters for status and whether the order is paid
-#     list_filter = ('status', 'is_paid')
-    
-#     # Default ordering by order_date
-#     ordering = ('-order_date',)
-    
-#     # Define the fieldsets to organize the order details in the form view
-#     fieldsets = (
-#         (None, {
-#             'fields': (
-#                 'customer', 'item', 'quantity', 'total_price',
-#                 'status', 'is_paid', 'transaction_id', 'card_name',
-#                 'card_last4', 'order_date',
-#             )
-#         }),
-#     )
-
-#     # Optionally, you can add custom actions like marking orders as shipped
-#     actions = ['mark_as_shipped']
-
-#     def mark_as_shipped(self, request, queryset):
-#         queryset.update(status='shipped')
-#     mark_as_shipped.short_description = "Mark selected orders as shipped"
-
 # Inline class for OrderItem
 class OrderItemInline(admin.TabularInline):
     model = OrderItem

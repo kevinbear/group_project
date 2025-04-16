@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block placeholder %}
-<main class="container my-5 text-center">
-  <div class="p-5 border rounded shadow-sm bg-light">
+<main class="container my-5 text-center restaurant-success">
+  <div class="p-5 border rounded shadow-sm bg-light ">
     <img src="{% static 'image/success_icon.png' %}" alt="Success" width="80" class="mb-4">
     <h2 class="text-success">Thank you for your order!</h2>
     <p class="lead mt-3">Your order has been placed successfully.</p>
@@ -15,4 +15,9 @@
     <a href="{% url 'home' %}" class="btn btn-dark mt-4">Back to Home</a>
   </div>
 </main>
+<style>
+  .restaurant-success{
+    height: 70vh;
+  }
+</style>
 {% endblock %}
