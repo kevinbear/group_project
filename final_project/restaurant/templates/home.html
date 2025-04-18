@@ -1,330 +1,396 @@
-{%extends "base.html"%}
-{% load static %}
-{%block placeholder%} 
+{%extends "base.html"%} {% load static %} {%block placeholder%}
 <main class="conainter-fluid">
-    <div class="row r1 r1-image">
-        <div class="col-md-6">
-            <h1 class="fw-bold">Where every meal is a masterpiece</h1>
-            <p>Indulge in the flavors of today, savor every bite, and immerse yourself in a dining experience that feels like home.</p>
-            <div class="dropdown w-50">
-                <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                  Menu
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <li>
-                    <a class="dropdown-item" href="{% url 'menu' %}#breakfast">
-                        <i class="fa-solid fa-mug-hot"></i> 
-                        Breakfast
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'menu' %}#lunch">
-                        <i class="fa-solid fa-burger"></i>  
-                        Lunch
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'menu' %}#dinner">
-                        <i class="fa-solid fa-plate-wheat"></i>
-                        Dinner
-                    </a>
-                  </li>
-                </ul>
+  <div class="row r1 r1-image">
+    <div class="col-md-6">
+      <h1 class="fw-bold">Where every meal is a masterpiece</h1>
+      <p>
+        Indulge in the flavors of today, savor every bite, and immerse yourself
+        in a dining experience that feels like home.
+      </p>
+      <div class="dropdown w-50">
+        <a
+          class="btn btn-info dropdown-toggle"
+          href="#"
+          role="button"
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Menu
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <li>
+            <a class="dropdown-item" href="{% url 'menu' %}#breakfast">
+              <i class="fa-solid fa-mug-hot"></i>
+              Breakfast
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'menu' %}#lunch">
+              <i class="fa-solid fa-burger"></i>
+              Lunch
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'menu' %}#dinner">
+              <i class="fa-solid fa-plate-wheat"></i>
+              Dinner
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md omelette-round-up">
+      <img
+        src="{% static 'image/omelette.jpg' %}"
+        alt="Delicious omelette"
+        class="img-fluid omelette-image"
+      />
+    </div>
+    <div class="col-md pancake-round-up">
+      <img
+        src="{% static 'image/pancake.jpg' %}"
+        alt="Delicious omelette"
+        class="img-fluid pancake-image"
+      />
+    </div>
+    <div class="col-md burger-round-down">
+      <img
+        src="{% static 'image/home_burger.jpg' %}"
+        alt="Delicious burger"
+        class="img-fluid burger-image"
+      />
+    </div>
+  </div>
+  <div class="row r2 py-5">
+    <div class="col-md">
+      <div class="d-flex flex-wrap justify-content-around">
+        {% for item in random_items %}
+        <div class="card" style="width: 18rem">
+          <img
+            src="{{ item.image.url }}"
+            class="card-img-top"
+            alt="{{ item.name }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <p class="card-text">{{ item.description }}</p>
+            <div
+              class="btn-group d-flex justify-content-between"
+              role="group"
+              aria-label="Button group with nested dropdown"
+            >
+              <button type="button" class="btn btn-primary">-</button>
+              <input type="number" class="text-center w-50" value="1" min="1" />
+              <button type="button" class="btn btn-primary">+</button>
             </div>
+            <button
+              class="btn btn-primary add-to-cart mt-2"
+              data-id="{{ item.item_id }}"
+              data-name="{{ item.name }}"
+              data-price="{{ item.price }}"
+            >
+              Add to cart
+            </button>
+          </div>
         </div>
-        <div class="col-md omelette-round-up">
-            <img src="{% static 'image/omelette.jpg' %}" alt="Delicious omelette" class="img-fluid omelette-image">
-        </div>
-        <div class="col-md pancake-round-up">
-            <img src="{% static 'image/pancake.jpg' %}" alt="Delicious omelette" class="img-fluid pancake-image">
-        </div>
-        <div class="col-md burger-round-down">
-            <img src="{% static 'image/home_burger.jpg' %}" alt="Delicious burger" class="img-fluid burger-image">
-        </div>
+        {% endfor %}
+      </div>
     </div>
-    <div class="row r2 py-5">
-        <div class="col-md">
-            <div class="d-flex flex-wrap justify-content-around">
-                {% for item in random_items %}
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">{{ item.description }}</p>
-                        <div
-                            class="btn-group d-flex justify-content-between"
-                            role="group"
-                            aria-label="Button group with nested dropdown"
-                        >
-                            <button type="button" class="btn btn-primary">-</button>
-                            <input type="number" class="text-center" value="1" min="1">
-                            <button type="button" class="btn btn-primary">+</button>
-                        </div>
-                        <button class="btn btn-primary add-to-cart mt-2" 
-                        data-id="{{ item.item_id }}" 
-                        data-name="{{ item.name }}" 
-                        data-price="{{ item.price }}">Add to cart</button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+  </div>
+  <div class="row r3">
+    <div
+      class="col-md d-flex flex-column justify-content-center align-items-center"
+    >
+      <h1 class="fw-bold text-end">Join us for a culinary adventure</h1>
+      <p class="text-end fs-h4">
+        Experience the art of dining with our expertly crafted dishes, made from
+        the freshest ingredients and served with love.
+      </p>
+      <a href="{% url 'menu' %}" class="btn btn-primary">Explore Menu</a>
     </div>
-    <div class="row r3">
-        <div class="col-md d-flex flex-column justify-content-center align-items-center">
-            <h1 class="fw-bold text-end">Join us for a culinary adventure</h1>
-            <p class="text-end fs-h4">Experience the art of dining with our expertly crafted dishes, made from the freshest ingredients and served with love.</p>
-            <a href="{% url 'menu' %}" class="btn btn-primary">Explore Menu</a>
-        </div>
-    </div>
-    <div class="row r4 text-center">
-        <h2 class="fw-bold mb-3">Visit Our Location</h2>
-        <p class="mb-4">We are located in the heart of Fullerton. Stop by and enjoy our delicious meals!</p>
-        <div id="map"></div>
-    </div>
-    <script>
-        var map = L.map('map').setView([33.8825, -117.8850], 13); // CSUF Coordinates
+  </div>
+  <div class="row r4 text-center">
+    <h2 class="fw-bold mb-3">Visit Our Location</h2>
+    <p class="mb-4">
+      We are located in the heart of Fullerton. Stop by and enjoy our delicious
+      meals!
+    </p>
+    <div id="map"></div>
+  </div>
+  <script>
+    var map = L.map("map").setView([33.8825, -117.885], 13); // CSUF Coordinates
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
 
-        // Add marker for CSUF
-        L.marker([33.8825, -117.8850]).addTo(map)
-            .bindPopup("<b>California State University, Fullerton</b><br>800 N State College Blvd, Fullerton, CA 92831")
-            .openPopup();
+    // Add marker for CSUF
+    L.marker([33.8825, -117.885])
+      .addTo(map)
+      .bindPopup(
+        "<b>California State University, Fullerton</b><br>800 N State College Blvd, Fullerton, CA 92831"
+      )
+      .openPopup();
 
-        // Ensure the map centers properly when the page loads
-        setTimeout(function() {
-            map.invalidateSize();
-        }, 500);
-    </script>
-    <script>
-        const csrftoken = '{{ csrf_token }}';
-    
-        document.querySelectorAll(".add-to-cart").forEach(button => {
-            button.addEventListener("click", function () {
-                const itemId = this.dataset.id;
-                const itemName = this.dataset.name;
-                const itemPrice = this.dataset.price;
-    
-                // Find the sibling input field and get its value
-                const quantityInput = this.closest(".card").querySelector("input[type='number']");
-                const quantity = parseInt(quantityInput.value) || 1;
-    
-                fetch("{% url 'add_to_cart' %}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": csrftoken
-                    },
-                    body: JSON.stringify({
-                        id: itemId,
-                        quantity: quantity,
-                        name: itemName,
-                        price: itemPrice
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert("Item added to cart!");
-                    console.log("Cart:", data.cart); // For testing
-                });
-            });
-        });
-    </script>
+    // Ensure the map centers properly when the page loads
+    setTimeout(function () {
+      map.invalidateSize();
+    }, 500);
+  </script>
+  <script>
+    const csrftoken = "{{ csrf_token }}";
+
+    document.querySelectorAll(".add-to-cart").forEach((button) => {
+      button.addEventListener("click", function () {
+        const itemId = this.dataset.id;
+        const itemName = this.dataset.name;
+        const itemPrice = this.dataset.price;
+
+        // Find the sibling input field and get its value
+        const quantityInput = this.closest(".card").querySelector(
+          "input[type='number']"
+        );
+        const quantity = parseInt(quantityInput.value) || 1;
+
+        fetch("{% url 'add_to_cart' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+          body: JSON.stringify({
+            id: itemId,
+            quantity: quantity,
+            name: itemName,
+            price: itemPrice,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Item added to cart!");
+            console.log("Cart:", data.cart); // For testing
+          });
+      });
+    });
+  </script>
 </main>
 <style>
-    .r0{
-        height: 25rem;
-        background-size: cover;
-        background-position: center;
-        color: white;
+  .r0 {
+    height: 25rem;
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+  .r1-image {
+    background-image: url("{% static 'image/homepage_r1_background.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    color: white;
+    text-align: center;
+    padding-top: 20%;
+  }
+  .omelette-round-up {
+    background-color: rgb(8, 172, 74);
+    position: absolute;
+    top: 0%;
+    right: 50%;
+    transform: translate(230%, 55%);
+    border-radius: 95% 95% 95% 15%;
+    overflow: hidden;
+    width: 15rem;
+    height: 15rem;
+    box-shadow: 10px 10px 30px rgb(172, 255, 134);
+  }
+  .pancake-round-up {
+    background-color: rgb(8, 49, 172);
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(280%, -20%);
+    border-radius: 95% 95% 95% 15%;
+    overflow: hidden;
+    width: 15rem;
+    height: 15rem;
+    box-shadow: 10px 10px 30px rgb(134, 170, 255);
+  }
+  .burger-round-down {
+    background-color: orange;
+    position: absolute;
+    top: 0%;
+    right: 50%;
+    transform: translate(90%, 90%);
+    border-radius: 95% 95% 15% 95%;
+    overflow: hidden;
+    width: 25rem;
+    height: 25rem;
+    box-shadow: 10px 10px 30px rgb(255, 211, 134);
+  }
+  .omelette-image,
+  .pancake-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 95% 95% 95% 95%;
+    width: 13rem;
+    height: 13rem;
+  }
+  .burger-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 95% 95% 95% 95%;
+    width: 23rem;
+    height: 23rem;
+  }
+  .r2 {
+    background: rgb(187, 195, 34);
+    background: linear-gradient(
+      348deg,
+      rgba(187, 195, 34, 1) 0%,
+      rgba(253, 45, 194, 1) 100%
+    );
+    min-height: 50vh; /* Change fixed height to min-height */
+    padding-bottom: 2rem; /* Add padding to prevent overlap */
+  }
+  .r2 .d-flex {
+    flex-wrap: wrap; /* Ensure cards move to next line instead of overflowing */
+    justify-content: center; /* Center align cards */
+  }
+  .r3 {
+    background-image: url("{% static 'image/restaurant_r3_background.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    min-height: 50vh;
+    position: relative;
+    color: black;
+    clear: both; /* Ensures r3 is pushed down */
+  }
+  .r3::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 0;
+  }
+  .r3 .col-md {
+    position: relative;
+    z-index: 1;
+    color: white;
+  }
+  .r3 .btn {
+    position: relative;
+    z-index: 1;
+    background-color: #0400ff; /* Restore button color */
+    border-color: #0400ff;
+    color: white; /* Ensure text is visible */
+  }
+  .r3 .btn:hover {
+    background-color: #0033b3; /* Darker blue on hover */
+  }
+  .r4 {
+    background: rgb(131, 58, 180);
+    background: linear-gradient(
+      90deg,
+      rgba(131, 58, 180, 1) 0%,
+      rgba(29, 235, 253, 1) 50%,
+      rgba(252, 176, 69, 1) 100%
+    );
+    padding: 3rem 0; /* Add padding to create spacing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #map {
+    height: 400px; /* Fixed height for consistency */
+    width: 90%; /* Reduce width slightly to prevent edge clipping */
+    max-width: 800px; /* Prevents it from getting too wide */
+    border-radius: 10px; /* Soft rounded edges for aesthetics */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .r2 {
+      background: rgb(2, 0, 36);
+      background: linear-gradient(
+        90deg,
+        rgba(2, 0, 36, 1) 0%,
+        rgba(72, 9, 121, 1) 20%,
+        rgba(0, 212, 255, 1) 100%
+      );
+      height: 95vh;
+      padding-bottom: 2rem; /* Add padding to prevent overlap */
     }
+    .r2 .card {
+      width: 100%; /* Full width on small screens */
+      margin-bottom: 2rem; /* Add some space between cards */
+    }
+    .omelette-round-up,
+    .pancake-round-up,
+    .omelette-image,
+    .pancake-image {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
     .r1-image {
-        background-image: url("{% static 'image/homepage_r1_background.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        height: 70vh;
-        color: white;
-        text-align: center;
-        padding-top: 20%;
+      background-image: url("{% static 'image/homepage_r1_background.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      height: 70vh;
+      color: white;
+      text-align: center;
+      padding-top: 20%;
     }
-    .omelette-round-up{
-        background-color: rgb(8, 172, 74);
-        position: absolute;
-        top: 0%;
-        right: 50%;
-        transform: translate(230%, 55%);
-        border-radius: 95% 95% 95% 15%;
-        overflow: hidden;
-        width: 15rem;
-        height: 15rem;
-        box-shadow: 10px 10px 30px rgb(172, 255, 134);
+    .omelette-round-up,
+    .pancake-round-up,
+    .omelette-image,
+    .pancake-image {
+      display: none;
     }
-    .pancake-round-up{
-        background-color: rgb(8, 49, 172);
-        position: absolute;
-        top: 50%;
-        right: 50%;
-        transform: translate(280%, -20%);
-        border-radius: 95% 95% 95% 15%;
-        overflow: hidden;
-        width: 15rem;
-        height: 15rem;
-        box-shadow: 10px 10px 30px rgb(134, 170, 255);
+    .burger-round-down {
+      position: relative; /* Change from absolute to relative */
+      left: auto; /* Reset left positioning */
+      right: auto; /* Reset right positioning */
+      transform: translate(0, 0); /* Remove excessive translation */
+      margin: 20px auto; /* Center the burger */
+      display: block;
+      width: 12rem; /* Adjust for smaller screens */
+      height: 12rem;
     }
-    .burger-round-down{
-        background-color: orange;
-        position: absolute;
-        top: 0%;
-        right: 50%;
-        transform: translate(90%, 90%);
-        border-radius: 95% 95% 15% 95%;
-        overflow: hidden;
-        width: 25rem;
-        height: 25rem;
-        box-shadow: 10px 10px 30px rgb(255, 211, 134);
-    }
-    .omelette-image, .pancake-image
-    {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 95% 95% 95% 95%;
-        width: 13rem;
-        height: 13rem;
-    }
-    .burger-image
-    {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 95% 95% 95% 95%;
-        width: 23rem;
-        height: 23rem;
+    .burger-image {
+      width: 11rem; /* Adjust width for smaller screens */
+      height: 11rem;
     }
     .r2 {
-        background: rgb(187,195,34);
-        background: linear-gradient(348deg, rgba(187,195,34,1) 0%, rgba(253,45,194,1) 100%);
-        min-height: 50vh; /* Change fixed height to min-height */
-        padding-bottom: 2rem; /* Add padding to prevent overlap */
+      background: rgb(2, 0, 36);
+      background: linear-gradient(
+        90deg,
+        rgba(2, 0, 36, 1) 0%,
+        rgba(72, 9, 121, 1) 20%,
+        rgba(0, 212, 255, 1) 100%
+      );
+      min-height: auto; /* Allow section to grow naturally */
+      padding-bottom: 4rem;
     }
-    .r2 .d-flex {
-        flex-wrap: wrap; /* Ensure cards move to next line instead of overflowing */
-        justify-content: center; /* Center align cards */
-    }
-    .r3 {
-        background-image: url("{% static 'image/restaurant_r3_background.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        opacity: 0.7;
-        min-height: 50vh;
-        position: relative;
-        color: black;
-        clear: both; /* Ensures r3 is pushed down */
-    }
-    .r3::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-        z-index: 0;
-    }
-    .r3 .col-md {
-        position: relative;
-        z-index: 1;
-        color: white;
-    }
-    .r3 .btn {
-        position: relative;
-        z-index: 1;
-        background-color: #0400ff; /* Restore button color */
-        border-color: #0400ff;
-        color: white; /* Ensure text is visible */
-    }
-    .r3 .btn:hover {
-        background-color: #0033b3; /* Darker blue on hover */
-    }
-    .r4 {
-        background: rgb(131,58,180);
-        background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(29,235,253,1) 50%, rgba(252,176,69,1) 100%);
-        padding: 3rem 0; /* Add padding to create spacing */
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .r2 .card {
+      width: 100%; /* Make cards full width */
+      margin-bottom: 2rem; /* Space between cards */
     }
     #map {
-        height: 400px; /* Fixed height for consistency */
-        width: 90%; /* Reduce width slightly to prevent edge clipping */
-        max-width: 800px; /* Prevents it from getting too wide */
-        border-radius: 10px; /* Soft rounded edges for aesthetics */
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+      height: 300px; /* Smaller height for mobile */
+      width: 95%; /* Give some breathing room */
     }
-    
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .r2 {
-            background: rgb(2,0,36);
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(72,9,121,1) 20%, rgba(0,212,255,1) 100%);
-            height: 95vh;
-            padding-bottom: 2rem; /* Add padding to prevent overlap */
-        }
-        .r2 .card {
-            width: 100%; /* Full width on small screens */
-            margin-bottom: 2rem; /* Add some space between cards */
-        }
-        .omelette-round-up, .pancake-round-up, .omelette-image, .pancake-image{
-            display: none;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .r1-image {
-            background-image: url("{% static 'image/homepage_r1_background.jpg' %}");
-            background-size: cover;
-            background-position: center;
-            height: 70vh;
-            color: white;
-            text-align: center;
-            padding-top: 20%;
-        }
-        .omelette-round-up, .pancake-round-up, .omelette-image, .pancake-image{
-            display: none;
-        }
-        .burger-round-down {
-            position: relative; /* Change from absolute to relative */
-            left: auto; /* Reset left positioning */
-            right: auto; /* Reset right positioning */
-            transform: translate(0, 0); /* Remove excessive translation */
-            margin: 20px auto; /* Center the burger */
-            display: block;
-            width: 12rem; /* Adjust for smaller screens */
-            height: 12rem;
-        }
-        .burger-image {
-            width: 11rem; /* Adjust width for smaller screens */
-            height: 11rem;
-        }
-        .r2 {
-            background: rgb(2,0,36);
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(72,9,121,1) 20%, rgba(0,212,255,1) 100%);
-            min-height: auto; /* Allow section to grow naturally */
-            padding-bottom: 4rem;
-        }
-        .r2 .card {
-            width: 100%; /* Make cards full width */
-            margin-bottom: 2rem; /* Space between cards */
-        }
-        #map {
-            height: 300px; /* Smaller height for mobile */
-            width: 95%; /* Give some breathing room */
-        }
-    }
+  }
 </style>
 {%endblock%}
