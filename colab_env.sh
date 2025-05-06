@@ -37,15 +37,16 @@ fi
 source "$VENV_DIR/bin/activate"
 echo -e "${green}✔ Virtual environment activated for this cell.${reset}"
 
-# 3️⃣  Install dependencies (if any)
-REQ_FILE="/content/requirements.txt"
+# 3️⃣  Install dependencies (if requirements.txt exists in the current directory)
+REQ_FILE="$PWD/requirements.txt"     # <‑‑ Was /content/requirements.txt
+
 if [ -f "$REQ_FILE" ]; then
-  echo -e "${yellow}Installing packages from requirements.txt...${reset}"
+  echo -e "${yellow}Installing packages from $(basename "$REQ_FILE")...${reset}"
   pip install --quiet --upgrade pip
   pip install --quiet -r "$REQ_FILE"
   echo -e "${green}✔ All packages installed!${reset}"
 else
-  echo -e "${red}⚠ /content/requirements.txt not found — skipping pip install.${reset}"
+  echo -e "${red}⚠ requirements.txt not found in $(pwd) — skipping pip install.${reset}"
 fi
 
 # 4️⃣  Set RENDER=False for this session and future !bash cells
