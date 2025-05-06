@@ -19,15 +19,21 @@ else
   exit 1
 fi
 
-# 2️⃣  Create / activate virtual environment
-VENV_DIR="/content/colab_dev_env"
+# 2️⃣  Create / activate virtual environment inside the project folder
+#     (Uses 'virtualenv' so we avoid ensurepip issues)
+VENV_DIR="$PWD/.venv"         # << change the folder name if you prefer
+
 if [ ! -d "$VENV_DIR" ]; then
-  echo -e "${yellow}Creating virtual environment ${VENV_DIR##*/}...${reset}"
-  python3 -m venv "$VENV_DIR"
+  echo -e "${yellow}Creating virtual environment at ${VENV_DIR}...${reset}"
+  # Ensure virtualenv is available (brings its own pip)
+  pip install --quiet --upgrade pip virtualenv
+  virtualenv "$VENV_DIR"
   echo -e "${green}✔ Virtual environment created!${reset}"
 else
   echo -e "${yellow}Virtual environment already exists. Re‑using it.${reset}"
 fi
+
+# Activate it for the rest of the current cell
 source "$VENV_DIR/bin/activate"
 echo -e "${green}✔ Virtual environment activated for this cell.${reset}"
 
