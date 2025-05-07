@@ -10,7 +10,7 @@
 ### Step 1: Download and Extract the Setup Files
 
 1. Download the setup files from the provided
-   [Project Download Link](https://github.com/kevinbear/group_project/kevinbear/group_project/archive/refs/heads/main.zip)
+   [Project Download Link](https://github.com/kevinbear/group_project/archive/refs/tags/v1.0.1.zip)
 2. Extract the downloaded ZIP file to your desired location.
 
 ### Step 2: Open in VS Code and Terminal
