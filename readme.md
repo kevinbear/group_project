@@ -1,4 +1,4 @@
-# ISDS Final Poject (For Render)
+# ISDS Final Poject
 
 ## Python Environment Setup
 
