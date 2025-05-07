@@ -19,7 +19,7 @@
 2. Navigate to **File > Open Folder** and select the extracted folder.
 3. Open the integrated terminal in VS Code by clicking **Terminal > New Terminal** or using the shortcut:
    - Windows: `Ctrl + ~`
-   - macOS/Linux: `Cmd + ~`
+   - macOS/Linux: `Ctrl + ~`
 
 ### Step 3: Run the Environment Setup Script
 
