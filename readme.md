@@ -10,7 +10,7 @@
 ### Step 1: Download and Extract the Setup Files
 
 1. Download the setup files from the provided
-   [Project Download Link](https://www.dropbox.com/home/Yin-Bo%20Kuo/2025%20Spring/ISDS%20558%20Advance%20Software%20Development%20Web%20Application/group%207%20final%20project/Source%20Code)
+   [Project Download Link](https://github.com/kevinbear/group_project/kevinbear/group_project/archive/refs/heads/main.zip)
 2. Extract the downloaded ZIP file to your desired location.
 
 ### Step 2: Open in VS Code and Terminal
